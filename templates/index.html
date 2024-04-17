@@ -1,18 +1,81 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = null)}">
+<th:block th:fragment="content" th:with="banner_img_height = ${#conversions.convert(theme.config.index.banner_img_height, 'java.lang.Integer')}">
+  <header
+    th:with="banner_img=${theme.config.index.banner_img},banner_mask_alpha=${theme.config.index.banner_mask_alpha},_title=${theme.config.index.slogan_text}">
+    <th:block th:replace="~{'modules/header'}" />
+  </header>
+  <main>
+    <div class="container nopadding-x-md" >
+      <div id="board" th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 m-auto">
+              <th:block th:each="post,iStat : ${posts.items}">
+                <div class="row mx-auto index-card" th:with="index_img = ${#strings.isEmpty(post.spec.cover) ? theme.config.post.default_index_img : post.spec.cover}">
+                  <th:block >
+                    <div class="col-12 col-md-4 m-auto index-img" th:if="${not #strings.isEmpty(index_img)}">
+                      <a th:href="${post.status.permalink}" target="_self">
+                        <img th:src="${index_img}" th:alt="${post.spec.title}">
+                      </a>
+                    </div>
+                  </th:block>
+                  <article th:class="|col-12 col-md-${not #strings.isEmpty(index_img)? '8' : '12'} mx-auto index-info|">
+                    <h2 class="index-header">
+                      <th:block th:if="${theme.config.index.post_sticky.enable && post.spec.pinned}">
+                        <i th:class="|index-pin ${theme.config.index.post_sticky.icon}|" title="Pin on top"></i>
+                      </th:block>
+                      <a th:href="${post.status.permalink}" target="_self" th:text="${post.spec.title}"></a>
+                    </h2>
+                    <a class="index-excerpt ${not #strings.isEmpty(index_img) ? '' : 'index-excerpt__noimg' }"
+                      th:href="${post.status.permalink}" target="_self">
+                      <th:block th:with="excerpt = ${#strings.length(post.status.excerpt) > 200 ? 200 : #strings.length(post.status.excerpt)}">
+                        <div th:text="${#strings.substring(post.status.excerpt,0,excerpt)}">
+                        </div>
+                      </th:block>
+                    </a>
+                    <div class="index-btm post-metas">
+                      <div class="post-meta mr-3">
+                        <i class="iconfont icon-date"></i>
+                        <time th:datetime="${#dates.format(post.spec.publishTime,'YYYY-MM-DD HH:mm')}" pubdate
+                          th:text="${#dates.format(post.spec.publishTime,'YYYY-MM-DD')}">
+                        </time>
+                      </div>
+                      <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                          <i class="iconfont icon-category"></i>
+                          <span class="category-chains">
+                            <span class="category-chain">
+                              <a th:href="${post.categories[0].status.permalink}"
+                                class="category-chain-item" th:text="${post.categories[0].spec.displayName}"></a>
+                            </span>
+                          </span>
+                        </div>
+                      </th:block>
+                      <th:block th:if="${not #lists.isEmpty(post.tags)}">
+                        <div class="post-meta">
+                          <i class="iconfont icon-tags"></i>
+                          <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}"
+                            th:text="${'#'+tag.spec.displayName}"></a>
+                        </div>
+                      </th:block>
+                    </div>
+                  </article>
+
+                </div>
+              </th:block>
+              <nav th:replace="~{modules/widgets/paginator :: paginator('',${posts})}"></nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  </main>
+</th:block>
+
 </html>

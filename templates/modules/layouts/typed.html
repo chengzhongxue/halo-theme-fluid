@@ -1,0 +1,14 @@
+<th:block th:if="${theme.config.fun_features.typing.enable}">
+    <script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js"></script>
+    <script>
+        (function (window, document) {
+            var typing = Fluid.plugins.typing;
+            var subtitle = document.getElementById('subtitle');
+            if (!subtitle || !typing) {
+                return;
+            }
+            var text = subtitle.getAttribute('data-typed-text');
+            typing(text);
+        })(window, document);
+    </script>
+</th:block>

@@ -1,17 +1,48 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1>标签</h1>
-    <ul>
-      <li th:each="tag : ${tags}">
-        <a
-          th:href="@{${tag.status.permalink}}"
-          th:text="${tag.spec.displayName}"
-        ></a>
-      </li>
-    </ul>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '标签')}">
+<th:block th:fragment="content"
+  th:with="banner_img_height = ${#conversions.convert(theme.config.tag.banner_img_height, 'java.lang.Integer')}">
+  <header th:with="banner_img= ${theme.config.tag.banner_img},
+  banner_mask_alpha=${theme.config.tag.banner_mask_alpha},
+  _title=${'标签'}">
+    <th:block th:replace="~{'modules/header'}" />
+  </header>
+  <main>
+    <div class="container nopadding-x-md">
+      <div id="board"
+        th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 m-auto">
+              <div class="text-center tagcloud" id="tagcloud">
+                <a th:each="tagItem : ${tagFinder.listAll()}" th:href="@{${tagItem.status.permalink}}"
+                  th:rel="${tagItem.status.visiblePostCount}" th:text="${tagItem.spec.displayName}"></a>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  </main>
+  <th:block th:fragment="js">
+    <!-- <script type="text/javascript" th:src="@{/assets/libs/jquery/jquery.min.js?ver=3.7.1}"></script>
+    <script type="text/javascript" th:src="@{/assets/libs/tagcloud/jquery.tagcloud.js}"></script>
+    <script>
+      $.fn.tagcloud.defaults = {
+        size: { start: 14, end: 18, unit: 'px' },
+        color: { start: '#cde', end: '#f52' }
+      };
+
+      $(function () {
+        $('.tagcloud a').tagcloud();
+      });
+    </script> -->
   </th:block>
+
+</th:block>
+
 </html>

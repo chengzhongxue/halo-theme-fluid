@@ -1,0 +1,11 @@
+<th:block th:if="${theme.config.fun_features.progressbar.enable}">
+    <script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js"></script>
+    <link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css">
+    <script>
+        NProgress.configure({ "showSpinner": [[${theme.config.fun_features.progressbar.showSpinner}]], "trickleSpeed": [[${theme.config.fun_features.progressbar.trickleSpeed}]] })
+        NProgress.start()
+        window.addEventListener('load', function () {
+            NProgress.done();
+        })
+    </script>
+</th:block>

@@ -1,0 +1,40 @@
+<div class="license-box my-3" th:if="${theme.config.post.copyright.enable}">
+    <div class="license-title">
+        <div>[[${post.spec.title}]]</div>
+        <div>[[${site.url+post.status.permalink}]]</div>
+    </div>
+    <div class="license-meta">
+        <div class="license-meta-item" th:if="${theme.config.post.copyright.author_enable}">
+            <div>作者</div>
+            <div>[[${post.owner.displayName}]]</div>
+        </div>
+        <div class="license-meta-item license-meta-date" th:if="${theme.config.post.copyright.post_date_enable}">
+            <div>发布于</div>
+            <div>[[${#dates.format(post.spec.publishTime,'YYYY年MM月DD日')}]]</div>
+        </div>
+        <div class="license-meta-item license-meta-date" th:if="${theme.config.post.copyright.update_date_enable}">
+            <div>更新于</div>
+            <div>[[${#dates.format(post.status.lastModifyTime,'YYYY年MM月DD日')}]]</div>
+        </div>
+        <div class="license-meta-item">
+            <div>许可协议</div>
+            <div>
+                <th:block th:each="license : ${#strings.listSplit(theme.config.post.copyright.license, '-')}"
+                th:with=" aria_label =${license == 'CC' 
+                ? 'CC - 知识共享许可协议' : license == 'BY' 
+                ? 'BY - 署名' : license == 'SA' 
+                ? 'SA - 相同方式共享' : license == 'NC' 
+                ? 'NC - 非商业性使用' : license == 'ND' 
+                ? 'ND - 禁止演绎' : '' }">
+                    <a class="print-no-link" target="_blank"
+                        th:href="|https://creativecommons.org/licenses/by-${#strings.toLowerCase(license)}/4.0/|">
+                        <span class="hint--top hint--rounded" th:aria-label="${aria_label}">
+                            <i th:class="|iconfont icon-cc-${#strings.toLowerCase(license)}|"></i>
+                        </span>
+                    </a>
+                </th:block>
+            </div>
+        </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+</div>

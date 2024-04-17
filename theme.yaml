@@ -1,17 +1,23 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: theme-starter
+  name: theme-fluid
 spec:
-  displayName: Theme Starter
+  displayName: Theme Fluid
   author:
-    name: halo-dev
-    website: "https://halo.run"
-  description: Halo 2.0 Theme base on Thymeleaf
+    name: 困困鱼
+    website: "https://github.com/chengzhongxue"
+  customTemplates:
+    page:
+      - name: 关于页面
+        description: 关于页面模版
+        screenshot:
+        file: about.html
+  description: 🌊 一款 Material Design 风格的 Halo 主题 / An elegant Material-Design theme for Halo
   logo: "https://halo.run/logo"
-  website: "https://halo.run"
-  repo: "https://github.com/halo-sigs/theme-starter"
-  settingName: "theme-starter-setting"
-  configMapName: "theme-starter-configMap"
+  website: "https://github.com/chengzhongxue"
+  repo: "https://github.com/chengzhongxue/halo-theme-fluid"
+  settingName: "theme-fluid-setting"
+  configMapName: "theme-fluid-configMap"
   version: "1.0"
-  require: "*"
+  require: ">=2.14.0"

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '404')}">
+<th:block th:fragment="content"
+    th:with="banner_img_height = ${#conversions.convert(theme.config.page404.banner_img_height, 'java.lang.Integer')}">
+    <header th:with="banner_img= ${theme.config.page404.banner_img},
+  banner_mask_alpha=${theme.config.page404.banner_mask_alpha},
+  _title='404'">
+        <th:block th:replace="~{'modules/header'}" />
+    </header>
+    <main>
+        <script>
+            function redirect() {
+                location.href = "/";
+            }
+            setTimeout(redirect, [[${#conversions.convert(theme.config.page404.redirect_delay, 'java.lang.Integer')}]])
+        </script>
+        <a id="scroll-top-button" aria-label="TOP" href="#" role="button"
+            th:if="${theme.config.global.scroll_top_arrow}">
+            <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+        </a>
+    </main>
+</th:block>
+
+</html>

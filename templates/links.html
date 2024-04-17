@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '友情链接')}">
+<th:block th:fragment="content"
+    th:with="banner_img_height = ${#conversions.convert(theme.config.links.banner_img_height, 'java.lang.Integer')}">
+    <header th:with="banner_img= ${theme.config.links.banner_img},
+  banner_mask_alpha=${theme.config.links.banner_mask_alpha},
+  _title='友情链接'">
+        <th:block th:replace="~{'modules/header'}" />
+    </header>
+    <main>
+        <div class="container nopadding-x-md">
+            <div id="board"
+                th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-10 m-auto">
+                            <div class="row links">
+                                <th:block th:with="groups = ${linkFinder.groupBy()}">
+                                    <th:block th:each="group,iterStat : ${groups}">
+                                        <div class="card col-lg-4 col-md-6 col-sm-12" th:each="link : ${group.links}">
+                                            <a th:href="${link.spec.url}" class="card-body hover-with-bg"
+                                                target="_blank" rel="noopener">
+                                                <div class="card-content">
+                                                    <div class="link-avatar my-auto">
+                                                        <img th:src="${link.spec.logo}"
+                                                            th:alt="${link.spec.displayName}" />
+                                                    </div>
+                                                    <div class="link-text">
+                                                        <div class="link-title" th:text="${link.spec.displayName}">
+                                                        </div>
+                                                        <div class="link-intro" th:text="${link.spec.description}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                            <div class="custom mx-auto" th:if="${not #strings.isEmpty(theme.config.links.custom.content) && theme.config.links.custom.enable}">
+                                <th:block th:utext="${theme.config.links.custom.content}"></th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="scroll-top-button" aria-label="TOP" href="#" role="button"
+            th:if="${theme.config.global.scroll_top_arrow}">
+            <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+        </a>
+    </main>
+</th:block>
+
+</html>

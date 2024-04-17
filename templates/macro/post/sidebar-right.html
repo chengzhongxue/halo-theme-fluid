@@ -1,0 +1,4 @@
+<aside class="sidebar" style="margin-left: -1rem"
+th:if="${theme.config.post.toc.placement == 'right' && theme.config.post.toc.enable}">
+<th:block th:replace="~{'macro/post/toc'}" />
+</aside>

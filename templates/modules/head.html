@@ -1,0 +1,27 @@
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" sizes="76x76" th:href="${theme.config.global.apple_touch_icon}">
+    <link rel="icon" th:href="${theme.config.global.favicon}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta th:if="${theme.config.global.force_https}" http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2" />
+    <meta name="theme-color" th:content="${theme.config.color.navbar_bg_color}">
+    <title th:text="${site_title}"></title>
+    <th:block th:if="${not #strings.isEmpty(theme.config.custom.head_html)}" th:utext="${theme.config.custom.head_html}"> </th:block>
+    <!-- 主题依赖的图标库，不要自行修改 -->
+    <link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+    <th:block th:replace="~{'modules/variables/variables-root'}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/main.css?v={version}(version=${theme.spec.version})}">
+    <th:block th:replace="~{'modules/variables/configs'}"/>
+    <th:block th:replace="~{'modules/variables/ground-glass'}"/>
+    <script th:src="@{/assets/js/utils.js?v={version}(version=${theme.spec.version})}"></script>
+    <script th:src="@{/assets/js/color-schema.js?v={version}(version=${theme.spec.version})}"></script>
+    <th:block th:if="${head != null}">
+        <th:block th:replace="${head}" />
+    </th:block>
+    <style type="text/css"
+        th:if="${not #strings.isEmpty(theme.config.custom.code_css)}"
+        th:utext="${theme.config.custom.code_css}" ></style>
+</head>

@@ -1,0 +1,21 @@
+<div class="post-metas my-3">
+    <th:block th:if="${not #lists.isEmpty(post.categories)}">
+        <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            <span class="category-chains">
+                <span class="category-chain" th:each="categorie : ${post.categories}">
+                    <a th:href="@{${categorie.status.permalink}}" th:text="${'#'+categorie.spec.displayName}"
+                        class="category-chain-item"></a>
+                </span>
+            </span>
+        </div>
+    </th:block>
+    <th:block th:if="${not #lists.isEmpty(post.tags)}">
+        <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}"
+                th:text="${'#'+tag.spec.displayName}" class="print-no-link"></a>
+        </div>
+    </th:block>
+
+</div>

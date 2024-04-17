@@ -1,26 +1,46 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <th:block th:each="archive : ${archives.items}">
-      <h1 th:text="${archive.year}"></h1>
-      <ul class="listing">
-        <th:block th:each="month : ${archive.months}">
-          <li th:each="post : ${month.posts}">
-            <a
-              th:href="@{${post.status.permalink}}"
-              th:title="${post.spec.title}"
-              th:text="${post.spec.title}"
-            ></a>
-          </li>
-        </th:block>
-      </ul>
-    </th:block>
-    <a th:if="${archives.hasPrevious()}" th:href="@{${archives.prevUrl}}">
-      上一页
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '归档')}">
+<th:block th:fragment="content"
+  th:with="banner_img_height = ${#conversions.convert(theme.config.archive.banner_img_height, 'java.lang.Integer')}">
+  <header th:with="banner_img= ${theme.config.archive.banner_img},
+  banner_mask_alpha=${theme.config.archive.banner_mask_alpha},
+  _title='归档'">
+    <th:block th:replace="~{'modules/header'}" />
+  </header>
+  <main>
+    <div class="container nopadding-x-md">
+      <div id="board"
+        th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 m-auto">
+              <div class="list-group">
+                <p class="h4" th:text="|共计 ${siteStatsFinder.getStats().post} 篇文章|"></p>
+                <hr>
+                <th:block th:each="archive : ${archives.items}">
+                  <p class="h5" th:text="${archive.year}"></p>
+                  <th:block th:each="month : ${archive.months}">
+                    <th:block th:each="post : ${month.posts}">
+                      <a th:href="${post.status.permalink}"
+                        class="list-group-item list-group-item-action">
+                        <time th:text="${#dates.format(post.spec.publishTime,'MM-dd')}"></time>
+                        <div class="list-group-item-title" th:text="${post.spec.title}"></div>
+                      </a>
+                    </th:block>
+                  </th:block>
+                </th:block>
+              </div>
+              <nav th:replace="~{modules/widgets/paginator :: paginator('/archives',${archives})}"></nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
-    <a th:if="${archives.hasNext()}" th:href="@{${archives.nextUrl}}">下一页</a>
-  </th:block>
+  </main>
+</th:block>
+
 </html>

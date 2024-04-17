@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${singlePage.spec.title}"></h1>
-    <article th:utext="${singlePage.content.content}"></article>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${singlePage.spec.title})}">
+<th:block th:fragment="content"
+  th:with="banner_img_height = ${#conversions.convert(theme.config.page.banner_img_height, 'java.lang.Integer')}">
+  <header th:with="banner_img= ${#strings.isEmpty(singlePage.spec.cover) ? theme.config.page.banner_img : singlePage.spec.cover},
+  banner_mask_alpha=${theme.config.page.banner_mask_alpha},
+  _title=${singlePage.spec.title}">
+    <th:block th:replace="~{'modules/header'}" />
+  </header>
+  <main>
+    <div class="container nopadding-x-md">
+      <div id="board" th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 m-auto">
+              <article class="page-content">
+                <th:block th:utext="${singlePage.content.content}" />
+                <th:block th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${singlePage.metadata.name},kind='SinglePage',group='content.halo.run')}"></th:block>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  </main>
+</th:block>
+
 </html>

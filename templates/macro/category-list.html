@@ -1,0 +1,60 @@
+<div class="category-list" th:fragment="category-list(categories,depth)">
+  <th:block th:each="category,index : ${categories}">
+    <th:block
+      th:with="subCats = ${category.children},collapsed = ${#lists.isEmpty(category.children) || depth>=  #conversions.convert(theme.config.category.collapse_depth, 'java.lang.Integer')}">
+      <div th:class="|${depth <= 0 ? 'category' : 'category-sub'} row nomargin-x|">
+        <a th:class="|${depth <= 0 ? '' : 'category-subitem'} ${collapsed ? 'collapsed' : ''}
+            list-group-item category-item-action col-10 col-md-11 col-xm-11 |" th:title="${category.spec.displayName}"
+          th:id="|heading-${category.metadata.name}|" role="tab" data-toggle="collapse"
+          th:href="|#collapse-${category.metadata.name}|" th:aria-expanded="${ collapsed ? 'false' : 'true'}">
+          [[${category.spec.displayName}]]
+          <span class="list-group-count"></span>
+          <i class="iconfont icon-arrowright"></i>
+        </a>
+        <a th:href="${category.status.permalink}" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span th:text="${category.status.visiblePostCount}"></span>
+        </a>
+        <div th:class="|category-collapse collapse ${collapsed ? '' : 'show'}|"
+          th:id="|collapse-${category.metadata.name}|" role="tabpanel"
+          th:aria-labelledby="|heading-${category.metadata.name}|"
+          th:with="categoryPostList = ${postFinder.listByCategory(1,100,category.metadata.name)}">
+          <th:block th:if="${!#lists.isEmpty(category.children)}">
+            <th:block th:replace="~{macro/category-list :: category-post-list(${categoryPostList},${category})}">
+            </th:block>
+            <th:block
+              th:replace="~{macro/category-list :: category-list(${category.children},${#conversions.convert(depth, 'java.lang.Integer')+1})}">
+            </th:block>
+          </th:block>
+          <th:block th:if="${#lists.isEmpty(category.children)}">
+            <th:block th:replace="~{macro/category-list :: category-post-list(${categoryPostList},${category})}">
+            </th:block>
+          </th:block>
+        </div>
+      </div>
+    </th:block>
+
+  </th:block>
+
+
+</div>
+
+<div class="category-post-list" th:fragment="category-post-list(categoryPostList,category)">
+  <th:block th:with="limit = ${#conversions.convert(theme.config.category.post_limit, 'java.lang.Integer')}">
+    <th:block th:each="post,index : ${categoryPostList.items}">
+      <th:block th:if="${index.index >=limit }">
+        <a th:href="${category.status.permalink}" class="list-group-item list-group-item-action">
+          <span class="category-post" th:text="${category.spec.displayName}"></span>
+        </a>
+      </th:block>
+      <th:block th:unless="${index.index >=limit }">
+        <a th:href="${post.status.permalink}" th:title="${post.spec.title}"
+          class="list-group-item list-group-item-action">
+          <span class="category-post" th:text="${post.spec.title}"></span>
+        </a>
+      </th:block>
+    </th:block>
+  </th:block>
+
+
+</div>

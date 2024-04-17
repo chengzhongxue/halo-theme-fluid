@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${post.spec.title}"></h1>
-    <article th:utext="${post.content.content}"></article>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${post.spec.title})}">
+<th:block th:fragment="content"
+  th:with="banner_img_height = ${#conversions.convert(theme.config.post.banner_img_height, 'java.lang.Integer')}">
+  <header th:with="banner_img= ${#strings.isEmpty(post.spec.cover) ? theme.config.post.banner_img : post.spec.cover},
+  banner_mask_alpha=${theme.config.post.banner_mask_alpha},
+  _title=${post.spec.title}">
+    <div class="header-inner" th:style="|height: ${banner_img_height}vh;|">
+      <th:block th:replace="~{'modules/header/navigation'}" />
+      <th:block th:replace="~{'modules/header/banner-post'}" />
+    </div>
+  </header>
+  <main>
+    <div class="container-fluid nopadding-x">
+      <div class="row nomargin-x">
+        <div class="side-col d-none d-lg-block col-lg-2">
+          <th:block th:replace="~{'macro/post/sidebar-left'}" />
+        </div>
+        <div class="col-lg-8 nopadding-x-md">
+          <div class="container nopadding-x-md" id="board-ctn">
+            <div id="board">
+              <article class="post-content mx-auto">
+                <h1 id="seo-header" th:text="${post.spec.title}"></h1>
+                <div class="markdown-body">
+                  <th:block th:utext="${post.content.content}" />
+                </div>
+                <hr />
+                <div>
+                  <th:block th:replace="~{'macro/post/meta-bottom'}" />
+                  <th:block th:replace="~{'macro/post/copyright'}" />
+                  <div class="post-prevnext my-3" th:if="${theme.config.post.prev_next_enable}"
+                    th:with="postCursor = ${postFinder.cursor(post.metadata.name)}">
+                    <article class="post-prev col-6">
+                      <a th:if="${postCursor.hasPrevious()}" th:href="@{${postCursor.previous.status.permalink}}"
+                        th:title="${postCursor.previous.spec.title}">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile" th:text="${postCursor.previous.spec.title}"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    </article>
+                    <article class="post-next col-6">
+                      <a th:if="${postCursor.hasNext()}" th:href="@{${postCursor.next.status.permalink}}"
+                        th:title="${postCursor.next.spec.title}">
+                        <span class="hidden-mobile" th:text="${postCursor.next.spec.title}"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    </article>
+                  </div>
+                </div>
+                <th:block th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${post.metadata.name},kind='Post',group='content.halo.run')}"></th:block>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="side-col d-none d-lg-block col-lg-2">
+          <th:block th:replace="~{'macro/post/sidebar-right'}" />
+        </div>
+      </div>
+    </div>
+
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  </main>
+</th:block>
+
 </html>

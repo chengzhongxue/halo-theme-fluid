@@ -1,0 +1,71 @@
+<nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <strong th:text="${not #strings.isEmpty(theme.config.navbar.blog_title) ? theme.config.navbar.blog_title : site.title}"></strong>
+        </a>
+
+        <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <div class="animated-icon"><span></span><span></span><span></span></div>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto text-center"
+                th:with="topMenu = ${#strings.isEmpty(theme.config.navbar.menu) ? menuFinder.getPrimary() : menuFinder.getByName(theme.config.navbar.menu)}">
+
+                <th:block th:if="${not #lists.isEmpty(topMenu)}">
+
+                    <th:block th:each="menuItem,iterStat : ${topMenu.menuItems}">
+                        <li class="nav-item dropdown" th:if="${not #lists.isEmpty(menuItem.children)}">
+                            <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                th:with="icon = ${#annotations.getOrDefault(menuItem, 'icon', '')}">
+                                <th:block th:if="${not #strings.isEmpty(icon)}">
+                                    <i th:class="${icon}"></i>
+                                </th:block>
+                                <span th:text="${menuItem.status.displayName}"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <th:block th:each="childMenu,iterStat : ${menuItem.children}">
+                                    <a class="dropdown-item" th:href="@{${childMenu.status.href}}"
+                                        th:target="${childMenu.spec.target?.value}"
+                                        th:with="icon = ${#annotations.getOrDefault(childMenu, 'icon', '')}">
+                                        <th:block th:if="${not #strings.isEmpty(icon)}">
+                                            <i th:class="${icon}"></i>
+                                        </th:block>
+                                        <span th:text="${childMenu.status.displayName}"></span>
+                                    </a>
+                                </th:block>
+                            </div>
+                        </li>
+                        <li class="nav-item" th:unless="${not #lists.isEmpty(menuItem.children)}">
+                            <a class="nav-link" th:href="@{${menuItem.status.href}}"
+                                th:target="${menuItem.spec.target?.value}"
+                                th:with="icon = ${#annotations.getOrDefault(menuItem, 'icon', '')}">
+                                <th:block th:if="${not #strings.isEmpty(icon)}">
+                                    <i th:class="${icon}"></i>
+                                </th:block>
+                                <span th:text="${menuItem.status.displayName}"></span>
+                            </a>
+                        </li>
+
+                    </th:block>
+
+                </th:block>
+
+                <li class="nav-item" id="search-btn" th:if="${theme.config.navbar.search}">
+                    <a class="nav-link" onclick="SearchWidget.open()" data-toggle="modal" data-target="#modalSearch"
+                        aria-label="Search">
+                        <i class="iconfont icon-search"></i>
+                    </a>
+                </li>
+                <li class="nav-item" id="color-toggle-btn" th:if="${theme.config.navbar.dark_mode.enable}">
+                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                        <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

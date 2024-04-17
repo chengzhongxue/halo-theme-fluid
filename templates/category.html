@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${category.spec.displayName}"></h1>
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${'分类' + ' - ' + category.spec.displayName})}">
+<th:block th:fragment="content"
+  th:with="banner_img_height = ${#conversions.convert(theme.config.category.banner_img_height, 'java.lang.Integer')}">
+  <header th:with="banner_img= ${#strings.isEmpty(category.spec.cover) ? theme.config.category.banner_img : category.spec.cover},
+  banner_mask_alpha=${theme.config.category.banner_mask_alpha},
+  _title=${'分类' + ' - ' + category.spec.displayName}">
+    <th:block th:replace="~{'modules/header'}" />
+  </header>
+  <main>
+    <div class="container nopadding-x-md">
+      <div id="board" th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-10 m-auto">
+              <th:block th:replace="~{macro/archive-list :: archive-list(${'/categories/'+category.spec.slug})}"></th:block>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a id="scroll-top-button" aria-label="TOP" href="#" role="button" th:if="${theme.config.global.scroll_top_arrow}">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  </main>
+</th:block>
+
 </html>

@@ -1,0 +1,27 @@
+<div class="mt-3">
+    <span class="post-meta mr-2" th:if="${theme.config.post.meta.author_enable}">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        [[${post.owner.displayName}]]
+    </span>
+    <span class="post-meta" th:if="${theme.config.post.meta.date_enable}">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time th:datetime="${#dates.format(post.spec.publishTime,'YYYY-MM-DD HH:mm')}" pubdate
+            th:text="${#dates.format(post.spec.publishTime,'YYYY年MM月DD日')}">
+        </time>
+    </span>
+</div>
+<div class="mt-1" th:with="wordCount = ${#strings.length(post.content.content)}">
+    <span class="post-meta mr-2" th:if="${theme.config.post.meta.wordcount_enable}">
+        <i class="iconfont icon-chart"></i>
+        [[${wordCount}]] 字
+    </span>
+    <span class="post-meta mr-2" th:if="${theme.config.post.meta.min2read_enable}">
+        <i class="iconfont icon-clock-fill"></i>
+        [[${wordCount / 400}]] 分钟
+    </span>
+    <span class="post-meta" th:if="${theme.config.post.meta.views_enable}">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        [[${post.stats.visit}]]
+    </span>
+
+</div>

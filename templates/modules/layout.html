@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (_head,_content,_title)"
+  th:with="site_title = ${not #strings.isEmpty(_title) ?  _title+' - '+site.title  :  #strings.isEmpty(site.subtitle) ? site.title :  site.title +' - ' +site.subtitle }">
+
+<head th:replace="~{modules/head :: head}"></head>
+
+<body>
+  <th:block th:replace="${_content}" />
+  <th:block th:replace="~{'modules/footer'}" />
+  <th:block th:replace="~{'modules/layouts/nprogress'}" />
+  <script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+  <script th:src="@{/assets/js/events.js?v={version}(version=${theme.spec.version})}"></script>
+  <script th:src="@{/assets/js/plugins.js?v={version}(version=${theme.spec.version})}"></script>
+  <th:block th:replace="~{'modules/layouts/typed'}" />
+  <th:block th:replace="~{'modules/layouts/lazyload'}" />
+  <script th:src="@{/assets/js/boot.js?v={version}(version=${theme.spec.version})}"></script>
+  <script type="text/javascript" th:if="${not #strings.isEmpty(theme.config.custom.code_js)}"
+    th:utext="${theme.config.custom.code_js}">
+    </script>
+  <th:block th:if="${not #strings.isEmpty(theme.config.custom.footer_html)}"
+    th:utext="${theme.config.custom.footer_html}"> </th:block>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+
+</html>

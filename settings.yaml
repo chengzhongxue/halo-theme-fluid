@@ -1,13 +1,912 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-starter-setting
+  name: theme-fluid-setting
 spec:
   forms:
-    - group: style
-      label: 样式
+    - group: global
+      label: 全局
+      formSchema:
+        - $formkit: group
+          name: font
+          label: 主题字体配置
+          value:
+            font_size: "16px"
+            font_family:
+            letter_spacing: "0.02em"
+            code_font_size: "85%"
+          children:
+            - $formkit: text
+              name: font_size
+              label: 字体大小
+              validation: required
+            - $formkit: text
+              name: font_family
+              label: 字体
+            - $formkit: text
+              name: letter_spacing
+              label: 字间距
+              validation: required
+            - $formkit: text
+              name: code_font_size
+              label: code字体大小
+              validation: required
+        - $formkit: attachment
+          name: favicon 
+          label: 用于浏览器标签的图标
+          value: "/themes/theme-fluid/assets/img/fluid.png"
+        - $formkit: attachment
+          name: apple_touch_icon 
+          label: 用于苹果设备的图标
+          value: "/themes/theme-fluid/assets/img/fluid.png"
+        - $formkit: checkbox
+          name: force_https
+          label: 强制所有链接升级为 HTTPS
+          value: false
+          help: 适用于图片等资源出现 HTTP 混入报错
+        - $formkit: group
+          name: banner
+          label: 首屏图片的相关配置
+          value:
+            parallax: true
+            width_height_ratio: 1.0
+          children:
+            - $formkit: checkbox
+              name: parallax
+              id: parallax
+              label: 开启
+              help: 视差滚动，图片与板块会随着屏幕滚动产生视差效果
+            - $formkit: number
+              if: $get(parallax).value
+              name: width_height_ratio
+              label: 图片最小的宽高比
+              help: 以免图片两边被过度裁剪，适用于移动端竖屏时，如需关闭设为 0
+        - $formkit: group
+          name: scroll_down_arrow
+          label: 向下滚动的箭头
+          value:
+            enable: true
+            banner_height_limit: 80
+            scroll_after_turning_page: true
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: scroll_down_arrow_enable
+              label: 开启
+              help: 视差滚动，图片与板块会随着屏幕滚动产生视差效果
+            - $formkit: number
+              if: $get(scroll_down_arrow_enable).value
+              name: banner_height_limit
+              label: 头图高度不小于指定比例，才显示箭头
+              help: 0 - 100
+            - $formkit: checkbox
+              if: $get(scroll_down_arrow_enable).value
+              name: scroll_after_turning_page
+              label: 翻页后自动滚动
+        - $formkit: group
+          name: lazyload
+          label: 图片懒加载处理
+          value:
+            enable: true
+            loading_img: "/themes/theme-fluid/assets/img/loading.gif"
+            offset_factor: 2
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: lazyload_enable
+              label: 开启
+            - $formkit: attachment
+              if: $get(lazyload_enable).value
+              name: loading_img
+              label: 加载时的占位图片
+            - $formkit: number
+              if: $get(lazyload_enable).value
+              name: offset_factor
+              label: 触发加载的偏移倍数
+              help: 基数是视窗高度，可根据部署环境的请求速度调节
+        - $formkit: checkbox
+          name: scroll_top_arrow
+          label: 向顶部滚动的箭头
+
+    - group: navbar
+      label: 导航栏
+      formSchema:
+        - $formkit: text
+          name: blog_title 
+          label: 导航栏左侧的标题
+          value: "Fluid"
+          help: 为空则按 标题 显示
+        - $formkit: group
+          name: ground_glass
+          label: 导航栏毛玻璃特效
+          value:
+            enable: true
+            px: 3
+            alpha: 0.7
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: ground_glass_enable
+              label: 开启
+              help: 导航栏毛玻璃特效，实验性功能，可能会造成页面滚动掉帧和抖动，部分浏览器不支持会自动不生效
+            - $formkit: number
+              if: $get(ground_glass_enable).value
+              name: px
+              label: 模糊像素
+              help: 数字越大模糊度越高
+              validation: required
+            - $formkit: number
+              if: $get(ground_glass_enable).value
+              name: alpha
+              label: 不透明度
+              help: 数字越大透明度越低，注意透明过度可能看不清菜单字体 (0 - 1.0)
+              validation: required
+        - $formkit: menuRadio
+          name: menu
+          label: 菜单
+          value: ""
+        - $formkit: checkbox
+          name: search
+          label: 搜索功能
+          value: true
+        - $formkit: group
+          name: dark_mode
+          label: 主题暗色模式
+          value:
+            enable: true
+            default: auto
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: dark_mode_enable
+              label: 开启
+            - $formkit: radio
+              if: $get(dark_mode_enable).value
+              name: default
+              label: 配色
+              options:
+                - label: 跟随系统
+                  value: auto
+                - label: 浅色
+                  value: light
+                - label: 深色
+                  value: dark
+
+    - group: color
+      label: 主题颜色配置
       formSchema:
         - $formkit: color
-          name: background_color
-          label: 背景颜色
-          value: "#f2f2f2"
+          name: body_bg_color
+          label: body 背景色
+          value: "#eee"
+        - $formkit: color
+          name: body_bg_color_dark
+          label: body 背景色 (暗色模式)
+          value: "#181c27"
+
+        - $formkit: color
+          name: navbar_bg_color
+          label: 顶部菜单背景色
+          value: "#2f4154"
+        - $formkit: color
+          name: navbar_bg_color_dark
+          label: 顶部菜单背景色 (暗色模式)
+          value: "#1f3144"
+
+        - $formkit: color
+          name: navbar_text_color
+          label: 顶部菜单字体色
+          value: "#fff"
+        - $formkit: color
+          name: navbar_text_color_dark
+          label: 顶部菜单字体色 (暗色模式)
+          value: "#d0d0d0"
+
+        - $formkit: color
+          name: subtitle_color
+          label: 副标题字体色
+          value: "#fff"
+        - $formkit: color
+          name: subtitle_color_dark
+          label: 副标题字体色 (暗色模式)
+          value: "#d0d0d0"
+
+        - $formkit: color
+          name: text_color
+          label: 全局字体色
+          value: "#3c4858"
+        - $formkit: color
+          name: text_color_dark
+          label: 全局字体色 (暗色模式)
+          value: "#c4c6c9"
+        
+        - $formkit: color
+          name: sec_text_color
+          label: 全局次级字体色（摘要、简介等位置）
+          value: "#718096"
+        - $formkit: color
+          name: sec_text_color_dark
+          label: 全局次级字体色 (暗色模式)
+          value: "#a7a9ad"
+        
+        - $formkit: color
+          name: board_color
+          label: 主面板背景色
+          value: "#fff"
+        - $formkit: color
+          name: board_color_dark
+          label: 主面板背景色 (暗色模式)
+          value: "#252d38"
+        
+        - $formkit: color
+          name: post_text_color
+          label: 文章正文字体色
+          value: "#2c3e50"
+        - $formkit: color
+          name: post_text_color_dark
+          label: 文章正文字体色 (暗色模式)
+          value: "#c4c6c9"
+        
+        - $formkit: color
+          name: post_heading_color
+          label: 文章正文字体色（h1 h2 h3...）
+          value: "#1a202c"
+        - $formkit: color
+          name: post_heading_color_dark
+          label: 文章正文字体色（h1 h2 h3... 暗色模式）
+          value: "#c4c6c9"
+
+        - $formkit: color
+          name: post_link_color
+          label: 文章超链接字体色
+          value: "#0366d6"
+        - $formkit: color
+          name: post_link_color_dark
+          label: 文章超链接字体色 (暗色模式)
+          value: "#1589e9"
+
+        - $formkit: color
+          name: link_hover_color
+          label: 超链接悬浮时字体色
+          value: "#30a9de"
+        - $formkit: color
+          name: link_hover_color_dark
+          label: 超链接悬浮时字体色 (暗色模式)
+          value: "#30a9de"
+        
+        - $formkit: color
+          name: link_hover_bg_color
+          label: 超链接悬浮背景色
+          value: "#f8f9fa"
+        - $formkit: color
+          name: link_hover_bg_color_dark
+          label: 超链接悬浮背景色 (暗色模式)
+          value: "#364151"
+        
+        - $formkit: color
+          name: line_color
+          label: 分隔线和表格边线的颜色
+          value: "#eaecef"
+        - $formkit: color
+          name: line_color_dark
+          label: 分隔线和表格边线的颜色 (暗色模式)
+          value: "#435266"
+        
+        - $formkit: color
+          name: scrollbar_color
+          label: 滚动条颜色
+          value: "#c4c6c9"
+        - $formkit: color
+          name: scrollbar_color_dark
+          label: 滚动条颜色 (暗色模式)
+          value: "#687582"
+        
+        - $formkit: color
+          name: scrollbar_hover_color
+          label: 滚动条悬浮颜色
+          value: "#a6a6a6"
+        - $formkit: color
+          name: scrollbar_hover_color_dark
+          label: 滚动条悬浮颜色 (暗色模式)
+          value: "#9da8b3"
+        
+        - $formkit: color
+          name: button_bg_color
+          label: 按钮背景色
+          value: "transparent"
+        - $formkit: color
+          name: button_bg_color_dark
+          label: 按钮背景色 (暗色模式)
+          value: "transparent"
+        
+        - $formkit: color
+          name: button_hover_bg_color
+          label: 按钮悬浮背景色
+          value: "#f2f3f5"
+        - $formkit: color
+          name: button_hover_bg_color_dark
+          label: 按钮悬浮背景色 (暗色模式)
+          value: "#46647e"
+
+    - group: index
+      label: 首页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: 首页 Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 100
+          value: 100
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: text
+          name: slogan_text
+          label: 首页副标题的独立设置
+          value: "An elegant Material-Design theme for Halo"
+        - $formkit: group
+          name: post_sticky
+          label: 在首页置顶文章图标
+          value:
+            enable: true
+            icon: iconfont icon-top
+          children:
+            - $formkit: checkbox
+              name: post_sticky_enable
+              id: post_sticky_enable
+              label: 显示
+            - $formkit: text
+              if: $get(post_sticky_enable).value
+              name: icon
+              label: 图标
+        
+        
+    - group: post
+      label: 文章
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 70
+          value: 70
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: attachment
+          name: default_index_img 
+          label: 文章在首页的默认封面图
+          value: ""
+        - $formkit: group
+          name: meta
+          label: 文章标题下方的元信息
+          value:
+            author_enable: false
+            date_enable: true
+            wordcount_enable: true
+            min2read_enable: true
+            views_enable: false
+          children:
+            - $formkit: checkbox
+              name: author_enable
+              label: 作者
+            - $formkit: checkbox
+              name: date_enable
+              label: 文章日期
+            - $formkit: checkbox
+              name: wordcount_enable
+              label: 字数统计
+            - $formkit: checkbox
+              name: min2read_enable
+              label: 估计阅读全文需要的时长
+            - $formkit: checkbox
+              name: views_enable
+              label: 浏览量计数
+        - $formkit: group
+          name: copyright
+          label: 版权声明
+          value:
+            enable: true
+            license: BY
+            author_enable: true
+            post_date_enable: true
+            update_date_enable: false
+          children:
+            - $formkit: checkbox
+              name: enable
+              label: 显示
+            - $formkit: select
+              name: license
+              label: CreativeCommons license
+              options:
+                - label: BY
+                  value: BY
+                - label: BY-SA
+                  value: BY-SA
+                - label: BY-ND
+                  value: BY-ND
+                - label: BY-NC
+                  value: BY-NC
+                - label: BY-NC-SA
+                  value: BY-NC-SA
+                - label: BY-NC-ND
+                  value: BY-NC-ND
+            - $formkit: checkbox
+              name: author_enable
+              label: 显示作者
+            - $formkit: checkbox
+              name: post_date_enable
+              label: 显示发布日期
+            - $formkit: checkbox
+              name: update_date_enable
+              label: 显示更新日期
+        - $formkit: checkbox
+          name: prev_next_enable
+          label: 文章底部上一篇下一篇功能
+          value: true
+        - $formkit: checkbox
+          name: image_caption
+          label: 文章图片标题
+          value: true
+        - $formkit: checkbox
+          name: image_zoom
+          label: 文章图片可点击放大
+          value: true
+        - $formkit: group
+          name: toc
+          label: 侧边栏展示文章目录
+          value:
+            enable: true
+            placement: right
+            headingSelector: "h1,h2,h3,h4,h5,h6"
+            collapseDepth: 0
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: toc_enable
+              label: 显示
+            - $formkit: radio
+              name: placement
+              if: $get(toc_enable).value
+              label: 置于板块的左侧或右侧
+              options:
+                - label: 左
+                  value: left
+                - label: 右
+                  value: right
+            - $formkit: text
+              if: $get(toc_enable).value
+              name: headingSelector
+              label: 目录会选择这些节点作为标题
+            - $formkit: number
+              if: $get(toc_enable).value
+              name: collapseDepth
+              label: 层级的折叠深度
+              help: 0 是全部折叠，大于 0 后如果存在下级标题则默认展开
+
+    - group: tag
+      label: 标签页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 80
+          value: 80
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: group
+          name: tagcloud
+          label: 标签
+          value:
+            min_font: 15
+            max_font: 30
+            unit: px
+            start_color: "#BBBBEE"
+            end_color: "#337ab7"
+          children:
+            - $formkit: number
+              name: min_font
+              label: 最小字体
+              validation: required
+            - $formkit: number
+              name: max_font
+              label: 最大字体
+              validation: required
+            - $formkit: text
+              name: unit
+              label: unit
+              validation: required
+            - $formkit: color
+              name: start_color
+              label: 开始颜色
+            - $formkit: color
+              name: end_color
+              label: 结束颜色
+
+    - group: archive
+      label: 归档页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 60
+          value: 60
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+
+    - group: category
+      label: 分类页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 60
+          value: 60
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: number
+          name: collapse_depth
+          label: 层级的折叠深度
+          help: 0 是全部折叠，大于 0 后如果存在子分类则默认展开
+          value: 0
+        - $formkit: number
+          name: post_limit
+          label: 折叠展示文章数的最大值
+          help: 超过限制会显示 More，0 则不限制
+          value: 10
+    
+    - group: about
+      label: 关于页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 60
+          value: 60
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: attachment
+          name: avatar 
+          label: 头像
+          value: "/themes/theme-fluid/assets/img/avatar.png"
+        - $formkit: text
+          name: name 
+          label: 名称
+          value: "Fluid"
+        - $formkit: text
+          name: intro 
+          label: 简介
+          value: "An elegant theme for Halo"
+        - $formkit: repeater
+          name: icons
+          label: 社交媒体
+          value:
+            - class: "iconfont icon-github-fill"
+              icon_type: link
+              link: "https://github.com"
+              tip: "GitHub"
+            - class: "iconfont icon-douban-fill"
+              icon_type: link
+              link: "https://douban.com"
+              tip: "豆瓣"
+            - class: "iconfont icon-wechat-fill"
+              icon_type: qrcode
+              qrcode: "/themes/theme-fluid/assets/img/favicon.png"
+          children:
+            - $formkit: text
+              name: class
+              label: 图标
+            - $formkit: radio
+              name: icon_type
+              key: icon_type
+              id: icon_type
+              label: 信息展示方式
+              value: link
+              options:
+                - label: 跳转链接
+                  value: link
+                - label: 二维码
+                  value: qrcode
+            - $formkit: text
+              if: $value.icon_type == 'link'
+              name: tip
+              label: 名称
+            - $formkit: url
+              if: $value.icon_type == 'link'
+              name: link
+              label: 链接
+            - $formkit: attachment
+              if: $value.icon_type == 'qrcode'
+              name: qrcode 
+              label: 二维码
+            
+
+    - group: page
+      label: 自定义页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 60
+          value: 60
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+    
+    - group: page404
+      label: 404页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 85
+          value: 85
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: number
+          name: redirect_delay
+          label: 重定向到首页的延迟(毫秒)
+          value: 5000
+          
+
+    - group: links
+      label: 友链页
+      formSchema:
+        - $formkit: attachment
+          name: banner_img 
+          label: Banner 头图
+          value: "/themes/theme-fluid/assets/img/default.png"
+        - $formkit: number
+          name: banner_img_height
+          label: 头图高度
+          help: 屏幕百分比 0 - 60
+          value: 60
+        - $formkit: number
+          name: banner_mask_alpha
+          label: 头图黑色蒙版的不透明度
+          help: 0 - 1.0  1 是完全不透明
+          value: 0.3
+        - $formkit: group
+          name: custom
+          label: 友链下方自定义区域
+          value:
+            enable: true
+            content: "<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>"
+          children:
+            - $formkit: checkbox
+              name: enable
+              label: 开启
+            - $formkit: code
+              name: content
+              label: 内容
+              height: 200px
+              language: html
+        
+
+    - group: fun_features
+      label: 一些好玩的功能
+      formSchema:
+        - $formkit: group
+          name: typing
+          label: 为 subtitle 添加打字机效果
+          value:
+            enable: true
+            typeSpeed: 70
+            cursorChar: "_"
+            loop: false
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: typing_enable
+              label: 开启
+            - $formkit: number
+              if: $get(typing_enable).value
+              name: typeSpeed
+              label: 打印速度
+              help: 数字越大越慢
+              validation: required
+            - $formkit: text
+              if: $get(typing_enable).value
+              name: cursorChar
+              label: 游标字符
+              validation: required
+            - $formkit: checkbox
+              if: $get(typing_enable).value
+              name: loop
+              label: 是否循环播放效果
+        - $formkit: group
+          name: anchorjs
+          label: 为文章内容中的标题添加锚图标
+          value:
+            enable: true
+            element: "h1,h2,h3,h4,h5,h6"
+            placement: "left"
+            visible: "hover"
+            icon: ""
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: anchorjs_enable
+              label: 显示
+            - $formkit: text
+              if: $get(anchorjs_enable).value
+              name: element
+              label: element
+            - $formkit: radio
+              if: $get(anchorjs_enable).value
+              name: placement
+              label: 布置
+              options:
+                - label: 左
+                  value: left
+                - label: 右
+                  value: right
+            - $formkit: radio
+              if: $get(anchorjs_enable).value
+              name: visible
+              label: 可见
+              options:
+                - label: hover
+                  value: hover
+                - label: always
+                  value: always
+                - label: touch
+                  value: touch
+            - $formkit: text
+              if: $get(anchorjs_enable).value
+              name: icon
+              label: icon
+              help: "§ | # | ❡"
+        - $formkit: group
+          name: progressbar
+          label: 加载进度条
+          value:
+            enable: true
+            height_px: 3
+            color: "#29d"
+            showSpinner: false
+            trickleSpeed: 100
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: progressbar_enable
+              label: 开启
+            - $formkit: number
+              if: $get(progressbar_enable).value
+              name: height_px
+              label: 高度
+            - $formkit: text
+              name: color
+              if: $get(progressbar_enable).value
+              label: 颜色
+            - $formkit: checkbox
+              name: showSpinner
+              if: $get(progressbar_enable).value
+              label: showSpinner
+              validation: required
+            - $formkit: number
+              if: $get(progressbar_enable).value
+              name: trickleSpeed
+              label: trickleSpeed
+              validation: required
+
+
+    - group: footer
+      label: 页脚
+      formSchema:
+        - $formkit: code
+          name: content
+          label: 头部HTML代码
+          height: 200px
+          language: html
+          help: 页脚第一行文字的 HTM
+          value: <a href="https://www.halo.run" target="_blank" rel="nofollow noopener"><span>Halo</span></a><i class="iconfont icon-love"></i><a href="https://github.com/chengzhongxue/halo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+        - $formkit: group
+          name: beian
+          label: 加载进度条
+          value:
+            enable: true
+            icp_text: 京ICP证xxxx号
+            police_text: 京公网安备123456号
+            police_code: 123456
+            police_icon: /themes/theme-fluid/assets/img/police_beian.png
+          children:
+            - $formkit: checkbox
+              name: enable
+              id: beian_enable
+              label: 显示
+            - $formkit: text
+              if: $get(beian_enable).value
+              name: icp_text
+              label: ICP证号
+            - $formkit: text
+              if: $get(beian_enable).value
+              name: police_text
+              label: 公安备案号
+              help: 不填则只显示ICP
+            - $formkit: number
+              if: $get(beian_enable).value
+              name: police_code
+              label: 公安备案的编号
+              help: 用于URL跳转查询
+            - $formkit: attachment
+              if: $get(beian_enable).value
+              name: police_icon
+              label: 公安备案的图片
+              help: 为空时不显示备案图片
+    - group: custom
+      label: 扩展设置
+      formSchema:
+        - $formkit: code
+          name: head_html
+          label: 头部HTML代码
+          height: 200px
+          language: html
+        - $formkit: code
+          name: footer_html
+          label: 底部HTML代码
+          height: 200px
+          language: html
+        - $formkit: code
+          name: code_css
+          label: 自定义CSS
+          height: 200px
+          language: css
+        - $formkit: code
+          name: code_js
+          label: 自定义Javascript
+          height: 200px
+          language: javascript
+        
+

@@ -1,0 +1,21 @@
+<div id="banner" class="banner" th:if="${theme.config.global.banner.parallax}" th:attr="parallax = ${theme.config.global.banner.parallax}"
+    th:style="|background: url(${banner_img}) no-repeat center center; background-size: cover;|">
+    <div class="full-bg-img">
+        <div class="mask flex-center" th:style="|background-color: rgba(0, 0, 0, ${banner_mask_alpha})|">
+            <div class="banner-text text-center fade-in-up">
+                <div class="h2">
+                    <span th:if="${theme.config.fun_features.typing.enable}" id="subtitle"
+                        th:data-typed-text="${_title}"></span>
+                    <span th:unless="${theme.config.fun_features.typing.enable}" id="subtitle"
+                        th:text="${_title}"></span>
+                </div>
+
+            </div>
+
+            <div class="scroll-down-bar"
+                th:if="${theme.config.global.scroll_down_arrow.enable && theme.config.global.scroll_down_arrow.banner_height_limit <= banner_img_height}">
+                <i class="iconfont icon-arrowdown"></i>
+            </div>
+        </div>
+    </div>
+</div>

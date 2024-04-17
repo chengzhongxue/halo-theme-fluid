@@ -1,0 +1,5 @@
+<th:block th:fragment="halo-comment(name,kind,group)" th:if="${haloCommentEnabled}">
+    <article id="comments">
+        <halo:comment th:attr="name=${name},kind=${kind},group=${group}" />
+    </article>
+</th:block>

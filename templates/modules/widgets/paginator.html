@@ -1,0 +1,25 @@
+<nav aria-label="navigation" th:fragment="paginator(path,pageInfo)">
+    <span class="pagination" id="pagination">
+        <a class="extend prev" th:if="${pageInfo.hasPrevious}" rel="prev" th:href="@{${pageInfo.prevUrl}}">
+            <i class="iconfont icon-arrowleft"></i>
+        </a>
+        <th:block th:if="${pageInfo.page > 3}">
+            <a class="page-number" th:href="${path+'/page/1'}">1</a>
+            <span class="page-number" th:if="${pageInfo.page != 4}">…</span>
+        </th:block>
+
+        <th:block th:each="index:${#numbers.sequence(pageInfo.page-2,pageInfo.page+2)}">
+            <span class="page-number current" th:if="${pageInfo.page} == ${index}" th:text="${pageInfo.page}"></span>
+            <a th:unless="${pageInfo.page == index}" th:if="${index > 0 && index <= pageInfo.totalPages}"
+                class="page-number" th:href="${path+'/page/'+index}" th:text="${index}"></a>
+        </th:block>
+
+        <th:block th:if="${pageInfo.totalPages - pageInfo.page > 2}">
+            <span class="page-number" th:if="${pageInfo.totalPages - pageInfo.page != 3}">…</span>
+            <a class="page-number" th:href="${path+'/page/'+pageInfo.totalPages}" th:text="${pageInfo.totalPages}"></a>
+        </th:block>
+
+        <a class="extend next" th:if="${pageInfo.hasNext}" rel="next" th:href="@{${pageInfo.nextUrl}}"><i
+                class="iconfont icon-arrowright"></i></a>
+    </span>
+</nav>

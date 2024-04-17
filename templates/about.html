@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${singlePage.spec.title})}">
+<th:block th:fragment="content"
+    th:with="banner_img_height = ${#conversions.convert(theme.config.about.banner_img_height, 'java.lang.Integer')}">
+    <header th:with="banner_img= ${#strings.isEmpty(singlePage.spec.cover) ? theme.config.about.banner_img : singlePage.spec.cover},
+  banner_mask_alpha=${theme.config.about.banner_mask_alpha},
+  _title=${singlePage.spec.title}">
+        <th:block th:replace="~{'modules/header'}" />
+    </header>
+    <main>
+        <div class="container nopadding-x-md">
+            <div id="board"
+                th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+                <div class="about-avatar">
+                    <img th:src="${theme.config.about.avatar}" class="img-fluid" alt="avatar">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-10 m-auto">
+                            <div class="text-center">
+                                <div class="about-info">
+                                    <div class="about-name" th:text="${theme.config.about.name}"></div>
+                                    <div class="about-intro" th:text="${theme.config.about.intro}"> </div>
+                                    <div class="about-icons">
+                                        <th:block th:each="icon,iStat : ${theme.config.about.icons}">
+                                            <a th:if="${icon.icon_type == 'qrcode'}" th:attr="aria-label=${icon.tip}"
+                                                class="qr-trigger" target="_self">
+                                                <i th:class="${icon.class}" aria-hidden="true"></i>
+                                                <img class="qr-img" th:src="${icon.qrcode}" alt="qrcode" />
+                                            </a>
+                                            <a th:unless="${icon.icon_type == 'qrcode'}" th:attr="href=${icon.link}"
+                                                class="hint--bottom hint--rounded" target="_blank">
+                                                <i th:class="${icon.class}" aria-hidden="true"></i>
+                                            </a>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </div>
+                            <article class="about-content page-content mt-5">
+                                <div class="markdown-body">
+                                    <th:block th:utext="${singlePage.content.content}" />
+                                </div>
+                                <th:block
+                                    th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${singlePage.metadata.name},kind='SinglePage',group='content.halo.run')}">
+                                </th:block>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="scroll-top-button" aria-label="TOP" href="#" role="button"
+            th:if="${theme.config.global.scroll_top_arrow}">
+            <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+        </a>
+    </main>
+</th:block>
+
+</html>
