@@ -14,7 +14,7 @@ spec:
         screenshot:
         file: about.html
   description: 🌊 一款 Material Design 风格的 Halo 主题 / An elegant Material-Design theme for Halo
-  logo: "https://halo.run/logo"
+  logo: "/themes/theme-fluid/assets/img/fluid.png"
   website: "https://github.com/chengzhongxue"
   repo: "https://github.com/chengzhongxue/halo-theme-fluid"
   settingName: "theme-fluid-setting"
