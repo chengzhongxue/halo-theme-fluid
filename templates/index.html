@@ -38,8 +38,8 @@
                     <div class="index-btm post-metas">
                       <div class="post-meta mr-3">
                         <i class="iconfont icon-date"></i>
-                        <time th:datetime="${#dates.format(post.spec.publishTime,'YYYY-MM-DD HH:mm')}" pubdate
-                          th:text="${#dates.format(post.spec.publishTime,'YYYY-MM-DD')}">
+                        <time th:datetime="${#dates.format(post.spec.publishTime,'yyyy-MM-dd HH:mm')}" pubdate
+                          th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}">
                         </time>
                       </div>
                       <th:block th:if="${not #lists.isEmpty(post.categories)}">

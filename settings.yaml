@@ -188,10 +188,18 @@ spec:
           name: navbar_bg_color
           label: 顶部菜单背景色
           value: "#2f4154"
+        - $formkit: text
+          name: navbar_bg_rgba_color
+          label: 顶部菜单背景色 (rgba格式)
+          value: "47,65,84"
         - $formkit: color
           name: navbar_bg_color_dark
           label: 顶部菜单背景色 (暗色模式)
           value: "#1f3144"
+        - $formkit: text
+          name: navbar_bg_color_rgba_dark
+          label: 顶部菜单背景色 (暗色模式-rgba格式)
+          value: "31,49,68"
 
         - $formkit: color
           name: navbar_text_color

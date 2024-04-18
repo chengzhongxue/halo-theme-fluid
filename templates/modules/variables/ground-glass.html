@@ -21,7 +21,7 @@
                 :root:not([data-color-scheme]) .navbar .dropdown-collapse,
                 :root:not([data-color-scheme]) .top-nav-collapse,
                 :root:not([data-color-scheme]) .navbar-col-show {
-                    background: rgba(var(--navbar-bg-color-dark),var(--navbar-glass-alpha));
+                    background: rgba(var(--navbar-bg-color-rgba-dark),var(--navbar-glass-alpha));
                     -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
                     backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
                 }
@@ -39,7 +39,7 @@
             [data-color-scheme="dark"] .navbar .dropdown-collapse,
             [data-color-scheme="dark"] .top-nav-collapse,
             [data-color-scheme="dark"] .navbar-col-show {
-                background: rgba(var(--navbar-bg-color-dark),var(--navbar-glass-alpha));
+                background: rgba(var(--navbar-bg-color-rgba-dark),var(--navbar-glass-alpha));
                 -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
                 backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
             }
@@ -56,7 +56,7 @@
         .navbar .dropdown-collapse,
         .top-nav-collapse,
         .navbar-col-show {
-            background: rgba(var(--navbar-bg-color-dark),var(--navbar-glass-alpha));
+            background: rgba(var(--navbar-bg-rgba-color),var(--navbar-glass-alpha));
             -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
             backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
         }
@@ -65,7 +65,7 @@
         .navbar .dropdown-collapse,
         .top-nav-collapse,
         .navbar-col-show {
-            background: var(--navbar-bg-color-dark);
+            background: var(--navbar-bg-color);
         }
         }
 

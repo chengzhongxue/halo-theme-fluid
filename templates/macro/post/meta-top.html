@@ -5,8 +5,8 @@
     </span>
     <span class="post-meta" th:if="${theme.config.post.meta.date_enable}">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time th:datetime="${#dates.format(post.spec.publishTime,'YYYY-MM-DD HH:mm')}" pubdate
-            th:text="${#dates.format(post.spec.publishTime,'YYYY年MM月DD日')}">
+        <time th:datetime="${#dates.format(post.spec.publishTime,'yyyy-MM-dd HH:mm:ss')}" pubdate
+            th:text="${#dates.format(post.spec.publishTime,'yyyy年MM月dd日')}">
         </time>
     </span>
 </div>

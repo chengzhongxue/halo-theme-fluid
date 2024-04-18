@@ -10,11 +10,11 @@
         </div>
         <div class="license-meta-item license-meta-date" th:if="${theme.config.post.copyright.post_date_enable}">
             <div>发布于</div>
-            <div>[[${#dates.format(post.spec.publishTime,'YYYY年MM月DD日')}]]</div>
+            <div>[[${#dates.format(post.spec.publishTime,'yyyy年MM月dd日')}]]</div>
         </div>
         <div class="license-meta-item license-meta-date" th:if="${theme.config.post.copyright.update_date_enable}">
             <div>更新于</div>
-            <div>[[${#dates.format(post.status.lastModifyTime,'YYYY年MM月DD日')}]]</div>
+            <div>[[${#dates.format(post.status.lastModifyTime,'yyyy年MM月dd日')}]]</div>
         </div>
         <div class="license-meta-item">
             <div>许可协议</div>
