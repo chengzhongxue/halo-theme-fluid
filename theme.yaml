@@ -2,6 +2,8 @@ apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
   name: theme-fluid
+  annotations:
+    "store.halo.run/app-id": "app-jbTyl"
 spec:
   displayName: Theme Fluid
   author:

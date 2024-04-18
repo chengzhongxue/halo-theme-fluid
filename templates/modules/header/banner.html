@@ -13,7 +13,7 @@
             </div>
 
             <div class="scroll-down-bar"
-                th:if="${theme.config.global.scroll_down_arrow.enable && theme.config.global.scroll_down_arrow.banner_height_limit <= banner_img_height}">
+                th:if="${theme.config.global.scroll_down_arrow.enable && #conversions.convert(theme.config.global.scroll_down_arrow.banner_height_limit, 'java.lang.Integer') <= banner_img_height}">
                 <i class="iconfont icon-arrowdown"></i>
             </div>
         </div>

@@ -1,14 +1,15 @@
-<style type="text/css" th:inline="css" th:with="ground_glass_px = ${#conversions.convert(theme.config.navbar.ground_glass.px, 'java.lang.Integer')}">
-    [# th:if="${theme.config.global.banner.width_height_ratio > 0}"]
-        @media (max-width: [[${theme.config.global.banner.width_height_ratio * 100}]]vh) {
+<style type="text/css" th:inline="css" th:with="ground_glass_px = ${#conversions.convert(theme.config.navbar.ground_glass.px, 'java.lang.Integer')},
+width_height_ratio = ${#conversions.convert(theme.config.global.banner.width_height_ratio, 'java.lang.Integer')}">
+    [# th:if="${width_height_ratio > 0}"]
+        @media (max-width: [[${width_height_ratio * 100}]]vh) {
         .header-inner {
-            max-height: [[${100 / theme.config.global.banner.width_height_ratio}]]vw;
+            max-height: [[${100 / width_height_ratio}]]vw;
         }
         #board {
             margin-top: -1rem !important;
         }
         }
-        @media (max-width: [[${theme.config.global.scroll_down_arrow.banner_height_limit- 0.01}]]vh) {
+        @media (max-width: [[${#conversions.convert(theme.config.global.scroll_down_arrow.banner_height_limit, 'java.lang.Integer') - 0.01}]]vh) {
         .scroll-down-bar {
             display: none;
         }
