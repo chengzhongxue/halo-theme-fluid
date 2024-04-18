@@ -1,5 +1,5 @@
 <th:block th:if="${theme.config.fun_features.typing.enable}">
-    <script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js"></script>
+    <script th:src="@{/assets/libs/typed/typed.min.js?v='2.0.12'}"></script>
     <script>
         (function (window, document) {
             var typing = Fluid.plugins.typing;

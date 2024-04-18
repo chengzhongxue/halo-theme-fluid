@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${singlePage.spec.title})}">
+    th:replace="~{modules/layout :: layout(_head = ~{::head},_content = ~{::content},_title = ${singlePage.spec.title},page_js = ~{::page_js})}">
+<th:block th:fragment="head">
+    <link rel="stylesheet" th:href="@{/assets/libs/github-markdown/github-markdown.min.css?v='4.0.0'}">
+    <link rel="stylesheet" th:href="@{/assets/libs/hint/hint.min.css?v='2.7.0'}">
+    <link rel="stylesheet" th:href="@{/assets/libs/fancybox/jquery.fancybox.min.css?v='3.5.7'}">
+</th:block>
+<th:block th:fragment="page_js">
+    <th:block th:replace="~{'modules/layouts/page-js'}" />
+</th:block>
 <th:block th:fragment="content"
     th:with="banner_img_height = ${#conversions.convert(theme.config.about.banner_img_height, 'java.lang.Integer')}">
     <header th:with="banner_img= ${#strings.isEmpty(singlePage.spec.cover) ? theme.config.about.banner_img : singlePage.spec.cover},

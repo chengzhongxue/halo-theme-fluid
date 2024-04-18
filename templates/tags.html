@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '标签')}">
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '标签',page_js = null)}">
 <th:block th:fragment="content"
   th:with="banner_img_height = ${#conversions.convert(theme.config.tag.banner_img_height, 'java.lang.Integer')}">
   <header th:with="banner_img= ${theme.config.tag.banner_img},
@@ -29,18 +29,19 @@
     </a>
   </main>
   <th:block th:fragment="js">
-    <!-- <script type="text/javascript" th:src="@{/assets/libs/jquery/jquery.min.js?ver=3.7.1}"></script>
     <script type="text/javascript" th:src="@{/assets/libs/tagcloud/jquery.tagcloud.js}"></script>
     <script>
       $.fn.tagcloud.defaults = {
-        size: { start: 14, end: 18, unit: 'px' },
-        color: { start: '#cde', end: '#f52' }
+        size: { start: [[${#conversions.convert(theme.config.tag.tagcloud.min_font, 'java.lang.Integer')}]]
+          , end: [[${#conversions.convert(theme.config.tag.tagcloud.max_font, 'java.lang.Integer')}]]
+          , unit: "[(${theme.config.tag.tagcloud.unit})]" },
+        color: { start: '[(${theme.config.tag.tagcloud.start_color})]', end: '[(${theme.config.tag.tagcloud.end_color})]' }
       };
 
       $(function () {
         $('.tagcloud a').tagcloud();
       });
-    </script> -->
+    </script>
   </th:block>
 
 </th:block>

@@ -1,6 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${post.spec.title})}">
+  th:replace="~{modules/layout :: layout(_head = ~{::head},_content = ~{::content},_title = ${post.spec.title},page_js = ~{::page_js})}">
+<th:block th:fragment="head">
+  <link rel="stylesheet" th:href="@{/assets/libs/github-markdown/github-markdown.min.css?v='4.0.0'}">
+  <link rel="stylesheet" th:href="@{/assets/libs/hint/hint.min.css?v='2.7.0'}">
+  <link rel="stylesheet" th:href="@{/assets/libs/fancybox/jquery.fancybox.min.css?v='3.5.7'}">
+</th:block>
+<th:block th:fragment="page_js">
+  <script>
+    Fluid.utils.createScript('/themes/theme-fluid/assets/libs/tocbot/tocbot.min.js?v=4.20.1', function () {
+      var toc = jQuery('#toc');
+      if (toc.length === 0 || !window.tocbot) { return; }
+      var boardCtn = jQuery('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      window.tocbot.init(Object.assign({
+        tocSelector: '#toc-body',
+        contentSelector: '.markdown-body',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        includeTitleTags: true,
+        headingsOffset: -boardTop,
+      }, CONFIG.toc));
+      if (toc.find('.toc-list-item').length > 0) {
+        toc.css('visibility', 'visible');
+      }
+
+      Fluid.events.registerRefreshCallback(function () {
+        if ('tocbot' in window) {
+          tocbot.refresh();
+          var toc = jQuery('#toc');
+          if (toc.length === 0 || !tocbot) {
+            return;
+          }
+          if (toc.find('.toc-list-item').length > 0) {
+            toc.css('visibility', 'visible');
+          }
+        }
+      });
+    });
+  </script>
+  <th:block th:replace="~{'modules/layouts/page-js'}" />
+</th:block>
 <th:block th:fragment="content"
   th:with="banner_img_height = ${#conversions.convert(theme.config.post.banner_img_height, 'java.lang.Integer')}">
   <header th:with="banner_img= ${#strings.isEmpty(post.spec.cover) ? theme.config.post.banner_img : post.spec.cover},

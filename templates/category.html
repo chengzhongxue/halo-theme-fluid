@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${'分类' + ' - ' + category.spec.displayName})}">
+  th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${'分类' + ' - ' + category.spec.displayName},page_js = null)}">
 <th:block th:fragment="content"
   th:with="banner_img_height = ${#conversions.convert(theme.config.category.banner_img_height, 'java.lang.Integer')}">
   <header th:with="banner_img= ${#strings.isEmpty(category.spec.cover) ? theme.config.category.banner_img : category.spec.cover},

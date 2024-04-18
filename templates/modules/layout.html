@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (_head,_content,_title)"
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (_head,_content,_title,page_js)"
   th:with="site_title = ${not #strings.isEmpty(_title) ?  _title+' - '+site.title  :  #strings.isEmpty(site.subtitle) ? site.title :  site.title +' - ' +site.subtitle }">
 
 <head th:replace="~{modules/head :: head}"></head>
 
 <body>
+  <script th:src="@{/assets/libs/jquery/jquery.min.js?v='3.6.4'}"></script>
   <th:block th:replace="${_content}" />
   <th:block th:replace="~{'modules/footer'}" />
   <th:block th:replace="~{'modules/layouts/nprogress'}" />
-  <script src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+  <script th:src="@{/assets/libs/twitter-bootstrap/bootstrap.min.js?v='4.6.1'}"></script>
   <script th:src="@{/assets/js/events.js?v={version}(version=${theme.spec.version})}"></script>
   <script th:src="@{/assets/js/plugins.js?v={version}(version=${theme.spec.version})}"></script>
   <th:block th:replace="~{'modules/layouts/typed'}" />
   <th:block th:replace="~{'modules/layouts/lazyload'}" />
+  <th:block th:if="${page_js != null}">
+    <th:block th:replace="${page_js}" />
+  </th:block>
   <script th:src="@{/assets/js/boot.js?v={version}(version=${theme.spec.version})}"></script>
   <script type="text/javascript" th:if="${not #strings.isEmpty(theme.config.custom.code_js)}"
     th:utext="${theme.config.custom.code_js}">

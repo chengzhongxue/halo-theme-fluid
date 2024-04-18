@@ -3,7 +3,7 @@
     <th:block
       th:with="subCats = ${category.children},collapsed = ${#lists.isEmpty(category.children) || depth>=  #conversions.convert(theme.config.category.collapse_depth, 'java.lang.Integer')}">
       <div th:class="|${depth <= 0 ? 'category' : 'category-sub'} row nomargin-x|">
-        <a th:class="|${depth <= 0 ? '' : 'category-subitem'} ${collapsed ? 'collapsed' : ''}
+        <a th:class="|${depth <= 0 ? 'category-item' : 'category-subitem'} ${collapsed ? 'collapsed' : ''}
             list-group-item category-item-action col-10 col-md-11 col-xm-11 |" th:title="${category.spec.displayName}"
           th:id="|heading-${category.metadata.name}|" role="tab" data-toggle="collapse"
           th:href="|#collapse-${category.metadata.name}|" th:aria-expanded="${ collapsed ? 'false' : 'true'}">

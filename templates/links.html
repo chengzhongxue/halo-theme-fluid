@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '友情链接')}">
+    th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '友情链接',page_js = null)}">
 <th:block th:fragment="content"
     th:with="banner_img_height = ${#conversions.convert(theme.config.links.banner_img_height, 'java.lang.Integer')}">
     <header th:with="banner_img= ${theme.config.links.banner_img},

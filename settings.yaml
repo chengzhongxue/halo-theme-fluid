@@ -517,7 +517,7 @@ spec:
           value:
             min_font: 15
             max_font: 30
-            unit: px
+            unit: "px"
             start_color: "#BBBBEE"
             end_color: "#337ab7"
           children:

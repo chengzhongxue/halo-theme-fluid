@@ -1,0 +1,45 @@
+
+<script th:src="@{/assets/libs/clipboard/clipboard.min.js?v='2.0.11'}"></script>
+<script>Fluid.plugins.codeWidget();</script>
+<script>
+    Fluid.utils.createScript('/themes/theme-fluid/assets/libs/anchor/anchor.min.js?v=4.3.1', function() {
+        window.anchors.options = {
+            placement: CONFIG.anchorjs.placement,
+            visible  : CONFIG.anchorjs.visible
+        };
+        if (CONFIG.anchorjs.icon) {
+            window.anchors.options.icon = CONFIG.anchorjs.icon;
+        }
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+            res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+            window.anchors.options.class = 'anchorjs-link-left';
+        }
+        window.anchors.add(res.join(', '));
+
+        Fluid.events.registerRefreshCallback(function() {
+            if ('anchors' in window) {
+                anchors.removeAll();
+                var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+                var res = [];
+                for (var item of el) {
+                    res.push('.markdown-body > ' + item.trim());
+                }
+                if (CONFIG.anchorjs.placement === 'left') {
+                    anchors.options.class = 'anchorjs-link-left';
+                }
+                anchors.add(res.join(', '));
+            }
+        });
+    });
+</script>
+
+<script>
+    Fluid.utils.createScript('/themes/theme-fluid/assets/libs/fancybox/jquery.fancybox.min.js?v=3.5.7', function() {
+        Fluid.plugins.fancyBox();
+    });
+</script>
+<script>Fluid.plugins.imageCaption();</script>

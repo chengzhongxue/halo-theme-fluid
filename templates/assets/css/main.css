@@ -2208,3 +2208,7 @@ input[type=checkbox] {
     margin-left: 1rem;
   }
 }
+
+.fixed-top {
+  z-index: 99;
+}
