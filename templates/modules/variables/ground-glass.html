@@ -1,4 +1,4 @@
-<style type="text/css" th:inline="css">
+<style type="text/css" th:inline="css" th:with="ground_glass_px = ${#conversions.convert(theme.config.navbar.ground_glass.px, 'java.lang.Integer')}">
     [# th:if="${theme.config.global.banner.width_height_ratio > 0}"]
         @media (max-width: [[${theme.config.global.banner.width_height_ratio * 100}]]vh) {
         .header-inner {
@@ -17,16 +17,16 @@
 
     [# th:if="${theme.config.navbar.ground_glass.enable}"]
         @media (prefers-color-scheme: dark) {
-            @supports (-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) {
+            @supports (-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px)) {
                 :root:not([data-color-scheme]) .navbar .dropdown-collapse,
                 :root:not([data-color-scheme]) .top-nav-collapse,
                 :root:not([data-color-scheme]) .navbar-col-show {
                     background: rgba(var(--navbar-bg-color-rgba-dark),var(--navbar-glass-alpha));
-                    -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
-                    backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
+                    -webkit-backdrop-filter: blur([[${ground_glass_px}]]px);
+                    backdrop-filter: blur([[${ground_glass_px}]]px);
                 }
             }
-            @supports not ((-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px))) {
+            @supports not ((-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px))) {
                 :root:not([data-color-scheme]) .navbar .dropdown-collapse,
                 :root:not([data-color-scheme]) .top-nav-collapse,
                 :root:not([data-color-scheme]) .navbar-col-show {
@@ -35,16 +35,16 @@
             }
         }
 
-        @supports (-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) {
+        @supports (-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px)) {
             [data-color-scheme="dark"] .navbar .dropdown-collapse,
             [data-color-scheme="dark"] .top-nav-collapse,
             [data-color-scheme="dark"] .navbar-col-show {
                 background: rgba(var(--navbar-bg-color-rgba-dark),var(--navbar-glass-alpha));
-                -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
-                backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
+                -webkit-backdrop-filter: blur([[${ground_glass_px}]]px);
+                backdrop-filter: blur([[${ground_glass_px}]]px);
             }
         }
-        @supports not ((-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px))) {
+        @supports not ((-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px))) {
             [data-color-scheme="dark"] .navbar .dropdown-collapse,
             [data-color-scheme="dark"] .top-nav-collapse,
             [data-color-scheme="dark"] .navbar-col-show {
@@ -52,16 +52,16 @@
             }
         }
 
-        @supports (-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) {
+        @supports (-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px)) {
         .navbar .dropdown-collapse,
         .top-nav-collapse,
         .navbar-col-show {
             background: rgba(var(--navbar-bg-rgba-color),var(--navbar-glass-alpha));
-            -webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
-            backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px);
+            -webkit-backdrop-filter: blur([[${ground_glass_px}]]px);
+            backdrop-filter: blur([[${ground_glass_px}]]px);
         }
         }
-        @supports not ((-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px))) {
+        @supports not ((-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px))) {
         .navbar .dropdown-collapse,
         .top-nav-collapse,
         .navbar-col-show {
@@ -72,14 +72,14 @@
     [/]
 
     [# th:if="${!theme.config.navbar.ground_glass.enable}"]
-        @supports (-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) {
+        @supports (-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px)) {
             .navbar .dropdown-collapse,
             .top-nav-collapse,
             .navbar-col-show {
                 background-color: var(--navbar-bg-color);
             }
         }
-        @supports not ((-webkit-backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px)) or (backdrop-filter: blur([[${theme.config.navbar.ground_glass.px}]]px))) {
+        @supports not ((-webkit-backdrop-filter: blur([[${ground_glass_px}]]px)) or (backdrop-filter: blur([[${ground_glass_px}]]px))) {
             .navbar .dropdown-collapse,
             .top-nav-collapse,
             .navbar-col-show {
