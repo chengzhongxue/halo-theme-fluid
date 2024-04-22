@@ -1,10 +1,12 @@
-<div class="list-group" th:fragment="archive-list(path)">
-    <p class="h4" th:text="|共计 ${posts.total} 篇文章|"></p>
-    <hr>
-    <a th:each="post,iStat : ${posts.items}" th:href="${post.status.permalink}" 
-       class="list-group-item list-group-item-action">
-        <time style="flex: 0 0 8rem;" th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"></time>
-        <div class="list-group-item-title" th:text="${post.spec.title}"></div>
-    </a>
-</div>
-<nav th:replace="~{modules/widgets/paginator :: paginator(${path},${posts})}"></nav>
+<th:block th:fragment="archive-list(path)">
+    <div class="list-group">
+        <p class="h4" th:text="|共计 ${posts.total} 篇文章|"></p>
+        <hr>
+        <a th:each="post,iStat : ${posts.items}" th:href="${post.status.permalink}"
+           class="list-group-item list-group-item-action">
+            <time style="flex: 0 0 8rem;" th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"></time>
+            <div class="list-group-item-title" th:text="${post.spec.title}"></div>
+        </a>
+    </div>
+    <nav th:replace="~{modules/widgets/paginator :: paginator(${path},${posts})}"></nav>
+</th:block>

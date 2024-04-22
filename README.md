@@ -10,7 +10,7 @@
 
 ### 预览：[困困鱼](https://demo.kunkunyu.com?preview-theme=theme-fluid)
 
-### 文档：[Fluid 使用文档](https://moony.la/docs/fluid)
+### 文档：[Fluid 使用文档](https://docs.kunkunyu.com/docs/fluid)
 
 
 ### 插件支持

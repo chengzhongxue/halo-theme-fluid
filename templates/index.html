@@ -13,7 +13,8 @@
           <div class="row">
             <div class="col-12 col-md-10 m-auto">
               <th:block th:each="post,iStat : ${posts.items}">
-                <div class="row mx-auto index-card" th:with="index_img = ${#strings.isEmpty(post.spec.cover) ? theme.config.post.default_index_img : post.spec.cover}">
+                <div class="row mx-auto index-card" th:with="default_index_img= ${#strings.contains(theme.config.post.default_index_img,'?') ? theme.config.post.default_index_img+'&' : theme.config.post.default_index_img+'?'},
+                index_img = ${#strings.isEmpty(post.spec.cover) ? default_index_img+post.spec.title : post.spec.cover}">
                   <th:block >
                     <div class="col-12 col-md-4 m-auto index-img" th:if="${not #strings.isEmpty(index_img)}">
                       <a th:href="${post.status.permalink}" target="_self">

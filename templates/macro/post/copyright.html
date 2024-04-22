@@ -27,7 +27,7 @@
                 ? 'NC - 非商业性使用' : license == 'ND' 
                 ? 'ND - 禁止演绎' : '' }">
                     <a class="print-no-link" target="_blank"
-                        th:href="|https://creativecommons.org/licenses/by-${#strings.toLowerCase(license)}/4.0/|">
+                        th:href="|https://creativecommons.org/licenses/${#strings.toLowerCase(license == 'BY' ? license : 'BY-'+license)}/4.0/|">
                         <span class="hint--top hint--rounded" th:aria-label="${aria_label}">
                             <i th:class="|iconfont icon-cc-${#strings.toLowerCase(license)}|"></i>
                         </span>
