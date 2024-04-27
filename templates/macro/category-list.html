@@ -41,19 +41,31 @@
 
 <div class="category-post-list" th:fragment="category-post-list(categoryPostList,category)">
   <th:block th:with="limit = ${#conversions.convert(theme.config.category.post_limit, 'java.lang.Integer')}">
-    <th:block th:each="post,index : ${categoryPostList.items}">
-      <th:block th:if="${index.index >=limit }">
-        <a th:href="${category.status.permalink}" class="list-group-item list-group-item-action">
-          <span class="category-post" th:text="${category.spec.displayName}"></span>
-        </a>
-      </th:block>
-      <th:block th:unless="${index.index >=limit }">
+    <th:block th:if="${limit == 0}">
+      <th:block th:each="post,index : ${categoryPostList.items}">
         <a th:href="${post.status.permalink}" th:title="${post.spec.title}"
-          class="list-group-item list-group-item-action">
+           class="list-group-item list-group-item-action">
           <span class="category-post" th:text="${post.spec.title}"></span>
         </a>
       </th:block>
     </th:block>
+
+    <th:block th:unless="${limit == 0}">
+      <th:block th:each="post,index : ${categoryPostList.items}">
+        <th:block th:if="${index.index == limit &&  categoryPostList.total > limit }">
+          <a th:href="${category.status.permalink}" class="list-group-item list-group-item-action">
+            <span class="category-post">更多</span>
+          </a>
+        </th:block>
+        <th:block th:unless="${index.index >=limit }">
+          <a th:href="${post.status.permalink}" th:title="${post.spec.title}"
+             class="list-group-item list-group-item-action">
+            <span class="category-post" th:text="${post.spec.title}"></span>
+          </a>
+        </th:block>
+      </th:block>
+    </th:block>
+
   </th:block>
 
 

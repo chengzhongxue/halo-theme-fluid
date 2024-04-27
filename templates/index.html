@@ -3,7 +3,7 @@
   th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = null,page_js = null)}">
 <th:block th:fragment="content" th:with="banner_img_height = ${#conversions.convert(theme.config.index.banner_img_height, 'java.lang.Integer')}">
   <header
-    th:with="banner_img=${theme.config.index.banner_img},banner_mask_alpha=${theme.config.index.banner_mask_alpha},_title=${theme.config.index.slogan_text}">
+    th:with="banner_img=${theme.config.index.banner_img},banner_mask_alpha=${theme.config.index.banner_mask_alpha},_title=${theme.config.index.slogan.enable ? theme.config.index.slogan.text : site.title}">
     <th:block th:replace="~{'modules/header'}" />
   </header>
   <main>
@@ -14,7 +14,7 @@
             <div class="col-12 col-md-10 m-auto">
               <th:block th:each="post,iStat : ${posts.items}">
                 <div class="row mx-auto index-card" th:with="default_index_img= ${#strings.contains(theme.config.post.default_index_img,'?') ? theme.config.post.default_index_img+'&' : theme.config.post.default_index_img+'?'},
-                index_img = ${#strings.isEmpty(post.spec.cover) ? default_index_img+post.spec.title : post.spec.cover}">
+                index_img = ${not #strings.isEmpty(post.spec.cover) ? post.spec.cover : #strings.isEmpty(theme.config.post.default_index_img) ? theme.config.post.default_index_img : default_index_img+post.spec.title}">
                   <th:block >
                     <div class="col-12 col-md-4 m-auto index-img" th:if="${not #strings.isEmpty(index_img)}">
                       <a th:href="${post.status.permalink}" target="_self">

@@ -1,6 +1,6 @@
 <th:block th:if="${theme.config.fun_features.typing.enable}">
     <script th:src="@{/assets/libs/typed/typed.min.js?v='2.0.12'}"></script>
-    <script>
+    <script th:inline="javascript">
         (function (window, document) {
             var typing = Fluid.plugins.typing;
             var subtitle = document.getElementById('subtitle');
@@ -8,7 +8,44 @@
                 return;
             }
             var text = subtitle.getAttribute('data-typed-text');
-            typing(text);
+            var urlinfo = window.location.pathname;
+            urlinfo = decodeURIComponent(urlinfo);
+            if ([[${theme.config.index.slogan.api.enable}]] && urlinfo == '/') {
+                $.ajax({
+                    type: "[(${theme.config.index.slogan.api.method})]",
+                    url: '[(${theme.config.index.slogan.api.url})]',
+                    success: function(result) {
+                        var apiText;
+                        if (result) {
+                            var keysData = [(${theme.config.index.slogan.api.keys})];
+                            var keys = keysData.split(',');
+                            if (result instanceof Array) {
+                                result = result[0];
+                            }
+                            for (const k of keys) {
+                                var value = result[k];
+                                if (typeof value === 'string') {
+                                    apiText = value;
+                                    break;
+                                } else if (value instanceof Object) {
+                                    result = value;
+                                }
+                            }
+                        }
+                        apiText ? typing(apiText) : typing(text);
+                    },
+                    error: function(xhr, status, error) {
+                        if (error) {
+                            var url = '[(${theme.config.index.slogan.api.url})]'
+                            console.error(`Failed to request ${url}:`, error);
+                        }
+                        typing(text);
+                    }
+                })
+            }else {
+                typing(text);
+            }
+
         })(window, document);
     </script>
 </th:block>
