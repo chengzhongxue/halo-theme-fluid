@@ -48,7 +48,6 @@
         lazyload: {
             enable: [[${theme.config.global.lazyload.enable}]],
             loading_img: "[(${theme.config.global.lazyload.loading_img})]",
-            offset_factor: [[${#conversions.convert(theme.config.global.lazyload.offset_factor, 'java.lang.Integer')}]]
         },
         web_analytics: {
             enable: true,
@@ -68,13 +67,6 @@
             },
             woyaola: null,
             cnzz: null,
-            leancloud: {
-                app_id: "LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va",
-                app_key: "fUOlkXhD9wcmxOTed9NdlqPH",
-                server_url: "https://lyt8mpsi.lc-cn-n1-shared.com",
-                path: "window.location.pathname",
-                ignore_local: false
-            }
         },
     };
     if (CONFIG.web_analytics.follow_dnt) {

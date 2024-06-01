@@ -1,3 +1,10 @@
 <th:block th:if="${theme.config.global.lazyload.enable}">
-    <script th:src="@{/assets/js/img-lazyload.js?v={version}(version=${theme.spec.version})}"></script>
+    <script th:src="@{/assets/libs/lazyload/jquery.lazyload.min.js?v='1.9.1'}"></script>
+    <script>
+        $(function () {
+            $("img").lazyload({
+                effect: "fadeIn",
+            });
+        });
+    </script>
 </th:block>

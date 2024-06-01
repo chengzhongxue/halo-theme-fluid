@@ -11,10 +11,6 @@ Fluid.utils = {
     return dbc;
   },
 
-  unlistenScroll: function(callback) {
-    window.removeEventListener('scroll', callback);
-  },
-
   listenDOMLoaded(callback) {
     if (document.readyState !== 'loading') {
       callback();
@@ -32,63 +28,6 @@ Fluid.utils = {
         scrollTop: of.top + (offset || 0),
         easing   : 'swing'
       });
-    }
-  },
-
-  elementVisible: function(element, offsetFactor) {
-    offsetFactor = offsetFactor && offsetFactor >= 0 ? offsetFactor : 0;
-    var rect = element.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-    return (
-      (rect.top >= 0 && rect.top <= viewportHeight * (1 + offsetFactor) + rect.height / 2) ||
-      (rect.bottom >= 0 && rect.bottom <= viewportHeight * (1 + offsetFactor) + rect.height / 2)
-    );
-  },
-
-  waitElementVisible: function(selectorOrElement, callback, offsetFactor) {
-    var runningOnBrowser = typeof window !== 'undefined';
-    var isBot = (runningOnBrowser && !('onscroll' in window))
-      || (typeof navigator !== 'undefined' && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator.userAgent));
-    if (!runningOnBrowser || isBot) {
-      return;
-    }
-
-    offsetFactor = offsetFactor && offsetFactor >= 0 ? offsetFactor : 0;
-
-    function waitInViewport(element) {
-      Fluid.utils.listenDOMLoaded(function() {
-        if (Fluid.utils.elementVisible(element, offsetFactor)) {
-          callback();
-          return;
-        }
-        if ('IntersectionObserver' in window) {
-          var io = new IntersectionObserver(function(entries, ob) {
-            if (entries[0].isIntersecting) {
-              callback();
-              ob.disconnect();
-            }
-          }, {
-            threshold : [0],
-            rootMargin: (window.innerHeight || document.documentElement.clientHeight) * offsetFactor + 'px'
-          });
-          io.observe(element);
-        } else {
-          var wrapper = Fluid.utils.listenScroll(function() {
-            if (Fluid.utils.elementVisible(element, offsetFactor)) {
-              Fluid.utils.unlistenScroll(wrapper);
-              callback();
-            }
-          });
-        }
-      });
-    }
-
-    if (typeof selectorOrElement === 'string') {
-      this.waitElementLoaded(selectorOrElement, function(element) {
-        waitInViewport(element);
-      });
-    } else {
-      waitInViewport(selectorOrElement);
     }
   },
 
@@ -148,30 +87,6 @@ Fluid.utils = {
     e.parentNode.insertBefore(s, e.nextSibling);
   },
 
-  createCssLink: function(url) {
-    var l = document.createElement('link');
-    l.setAttribute('rel', 'stylesheet');
-    l.setAttribute('type', 'text/css');
-    l.setAttribute('href', url);
-    var e = document.getElementsByTagName('link')[0]
-      || document.getElementsByTagName('head')[0]
-      || document.head || document.documentElement;
-    e.parentNode.insertBefore(l, e);
-  },
-
-  loadComments: function(selector, loadFunc) {
-    var ele = document.querySelector('#comments[lazyload]');
-    if (ele) {
-      var callback = function() {
-        loadFunc();
-        ele.removeAttribute('lazyload');
-      };
-      Fluid.utils.waitElementVisible(selector, callback, CONFIG.lazyload.offset_factor);
-    } else {
-      loadFunc();
-    }
-  },
-
   getBackgroundLightness(selectorOrElement) {
     var ele = selectorOrElement;
     if (typeof selectorOrElement === 'string') {
@@ -188,19 +103,6 @@ Fluid.utils = {
     var colorCast = (0.213 * rgbArr[0]) + (0.715 * rgbArr[1]) + (0.072 * rgbArr[2]);
     return colorCast === 0 || colorCast > 255 / 2 ? 1 : -1;
   },
-
-  retry(handler, interval, times) {
-    if (times <= 0) {
-      return;
-    }
-    var next = function() {
-      if (--times >= 0 && !handler()) {
-        setTimeout(next, interval);
-      }
-    };
-    setTimeout(next, interval);
-  }
-
 };
 
 /**

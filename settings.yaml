@@ -89,7 +89,6 @@ spec:
           value:
             enable: true
             loading_img: "/themes/theme-fluid/assets/img/loading.gif"
-            offset_factor: 2
           children:
             - $formkit: checkbox
               name: enable
@@ -99,11 +98,6 @@ spec:
               if: $get(lazyload_enable).value
               name: loading_img
               label: 加载时的占位图片
-            - $formkit: number
-              if: $get(lazyload_enable).value
-              name: offset_factor
-              label: 触发加载的偏移倍数
-              help: 基数是视窗高度，可根据部署环境的请求速度调节
         - $formkit: checkbox
           name: scroll_top_arrow
           label: 向顶部滚动的箭头

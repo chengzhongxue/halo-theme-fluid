@@ -2,7 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
     th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = '友情链接',page_js = null)}">
 <th:block th:fragment="content"
-    th:with="banner_img_height = ${#conversions.convert(theme.config.links.banner_img_height, 'java.lang.Integer')}">
+    th:with="banner_img_height = ${#conversions.convert(theme.config.links.banner_img_height, 'java.lang.Integer')},
+    isLazyload = ${theme.config.global.lazyload.enable},loadingImg = ${theme.config.global.lazyload.loading_img}">
     <header th:with="banner_img= ${theme.config.links.banner_img},
   banner_mask_alpha=${theme.config.links.banner_mask_alpha},
   _title='友情链接'">
@@ -23,7 +24,8 @@
                                                 target="_blank" rel="noopener">
                                                 <div class="card-content">
                                                     <div class="link-avatar my-auto">
-                                                        <img th:src="${link.spec.logo}"
+                                                        <img th:src="${isLazyload ? loadingImg : link.spec.logo}"
+                                                             th:data-original="${ isLazyload ? link.spec.logo : ''}"
                                                             th:alt="${link.spec.displayName}" />
                                                     </div>
                                                     <div class="link-text">
