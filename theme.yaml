@@ -22,5 +22,5 @@ spec:
   issues:  "https://github.com/chengzhongxue/halo-theme-fluid/issues"
   settingName: "theme-fluid-setting"
   configMapName: "theme-fluid-configMap"
-  version: "1.0.2"
+  version: "1.0.3"
   require: ">=2.14.0"

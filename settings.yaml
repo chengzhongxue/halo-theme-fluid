@@ -899,7 +899,7 @@ spec:
           height: 200px
           language: html
           help: 页脚第一行文字的 HTM
-          value: <a href="https://www.halo.run" target="_blank" rel="nofollow noopener"><span>Halo</span></a><i class="iconfont icon-love"></i><a href="https://github.com/chengzhongxue/halo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+          value: <a href="https://www.halo.run" target="_blank" rel="nofollow noopener"><span>Halo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/chengzhongxue/halo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
         - $formkit: group
           name: beian
           label: 加载进度条
