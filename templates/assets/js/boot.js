@@ -13,7 +13,6 @@ Fluid.boot.registerEvents = function() {
 
 Fluid.boot.refresh = function() {
   Fluid.plugins.fancyBox();
-  Fluid.plugins.codeWidget();
   Fluid.events.refresh();
 };
 

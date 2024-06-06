@@ -856,7 +856,7 @@ i.iconfont {
     filter: brightness(0.9);
     transition: filter 0.2s ease-in-out;
   }
-  
+
   :root:not([data-color-scheme]) .license-box {
     background-color: rgba(62,75,94,0.35);
     transition: background-color 0.2s ease-in-out;
@@ -895,7 +895,7 @@ i.iconfont {
     filter: brightness(0.9);
     transition: filter 0.2s ease-in-out;
   }
-  
+
   [data-color-scheme="dark"] .license-box {
     background-color: rgba(62,75,94,0.35);
     transition: background-color 0.2s ease-in-out;
@@ -1288,34 +1288,10 @@ i.iconfont {
 #remark-km423lmfdslkm34-node {
   z-index: 1031;
 }
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 1.45rem 1rem;
-}
-.markdown-body pre code.hljs {
-  padding: 0;
-}
-.markdown-body pre[class*="language-"] {
-  padding-top: 1.45rem;
-  padding-bottom: 1.45rem;
-  padding-right: 1rem;
-  line-height: 1.5;
-  margin-bottom: 1rem;
-}
 .markdown-body .code-wrapper {
   position: relative;
   border-radius: 4px;
   margin-bottom: 1rem;
-}
-.markdown-body .hljs,
-.markdown-body .highlight pre,
-.markdown-body .code-wrapper pre,
-.markdown-body figure.highlight td.gutter {
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-  background-color: var(--highlight-bg-color);
-}
-pre[class*=language-].line-numbers {
-  position: initial;
 }
 figure {
   margin: 1rem 0;
@@ -1409,7 +1385,7 @@ figure.highlight td.code > pre {
 .markdown-body strong {
   font-weight: bold;
 }
-.markdown-body code {
+.markdown-body code, .markdown-body tt {
   tab-size: 4;
   background-color: var(--inlinecode-bg-color);
   transition: background-color 0.2s ease-in-out;
