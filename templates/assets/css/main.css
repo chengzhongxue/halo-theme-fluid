@@ -1385,7 +1385,7 @@ figure.highlight td.code > pre {
 .markdown-body strong {
   font-weight: bold;
 }
-.markdown-body code, .markdown-body tt {
+.markdown-body :not(pre)>code, .markdown-body tt {
   tab-size: 4;
   background-color: var(--inlinecode-bg-color);
   transition: background-color 0.2s ease-in-out;

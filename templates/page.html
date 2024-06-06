@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{modules/layout :: layout(_head = ~{::head},_content = ~{::content},_title = ${singlePage.spec.title},page_js = ~{::page_js})}">
 <th:block th:fragment="head">
-  <link rel="stylesheet" th:href="@{/assets/libs/github-markdown/github-markdown.min.css?v='4.0.0'}">
+  <link rel="stylesheet" th:href="@{/assets/libs/github-markdown/github-markdown.min.css?v={version}(version=${theme.spec.version})}">
   <link rel="stylesheet" th:href="@{/assets/libs/hint/hint.min.css?v='2.7.0'}">
   <link rel="stylesheet" th:href="@{/assets/libs/fancybox/jquery.fancybox.min.css?v='3.5.7'}">
 </th:block>
