@@ -143,6 +143,10 @@ spec:
           name: search
           label: 搜索功能
           value: true
+        - $formkit: checkbox
+          name: login
+          label: 导航栏添加登录按钮
+          value: true
         - $formkit: group
           name: dark_mode
           label: 主题暗色模式
