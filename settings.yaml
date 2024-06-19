@@ -341,6 +341,7 @@ spec:
           name: banner_img 
           label: 首页 Banner 头图
           value: "/themes/theme-fluid/assets/img/default.png"
+          help: 可设置视频背景，自带3个背景位于"/themes/theme-fluid/assets/video/bg1.mp4"，【bg1、bg2、bg3】。视频仅支持.mp4格式
         - $formkit: number
           name: banner_img_height
           label: 头图高度
