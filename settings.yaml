@@ -118,6 +118,7 @@ spec:
           children:
             - $formkit: radio
               name: type
+              id: brand_type
               label: 类型
               options:
                 - label: 文字
@@ -125,11 +126,15 @@ spec:
                 - label: 图片
                   value: "image"
             - $formkit: text
+              if: $get(brand_type).value == 'text'
               name: text
+              key: brand_text
               label: Logo文字内容
               help: 如果Logo文字内容为空，则默认显示博客系统的网站名称。
             - $formkit: text
+              if: $get(brand_type).value == 'image'
               name: image
+              key: brand_image
               label: Logo图片路径
               help: 选择图片类型时，图片路径不能为空。如果图片加载出错，则默认显示Logo文字内容。
         - $formkit: group
@@ -363,7 +368,7 @@ spec:
           name: banner_img 
           label: 首页 Banner 头图
           value: "/themes/theme-fluid/assets/img/default.png"
-          help: 可设置视频背景，自带3个背景位于"/themes/theme-fluid/assets/video/bg1.mp4"，【bg1、bg2、bg3】。视频仅支持.mp4格式
+          help: 可设置视频背景，视频仅支持.mp4格式
         - $formkit: number
           name: banner_img_height
           label: 头图高度
