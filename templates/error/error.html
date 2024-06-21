@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${error.status},page_js = null)}">
+<th:block th:fragment="content" th:with="banner_img_height = ${#conversions.convert(theme.config.page_error.banner_img_height, 'java.lang.Integer')}">
+    <header th:with="banner_img= ${theme.config.page_error.banner_img}, banner_mask_alpha=${theme.config.page_error.banner_mask_alpha}, _title=' '">
+        <th:block th:replace="~{'modules/header'}" />
+    </header>
+    <main>
+        <script>
+            function redirect() {
+                location.href = "[[${theme.config.page_error.redirect_page}]]";
+            }
+            const subtitleElement = document.getElementById('subtitle');
+            var i = "[[${#conversions.convert(theme.config.page_error.redirect_delay, 'java.lang.Integer')}]]" / 1000 + 1;
+            var errorText = "[[${error.status + ' ' + error.title}]]";
+            function updateCountdown() {
+                i = i - 1;
+                if (i > 0) {
+                    subtitleElement.textContent = errorText+ ', ' + i + '秒后跳转。';
+                } else if (i == 0) {
+                    subtitleElement.textContent = '正在跳转';
+                } else {
+                    clearInterval(interval);
+                    redirect();
+                }
+            }
+            const interval = setInterval(updateCountdown, 1000);
+        </script>
+    </main>
+</th:block>
+</html>

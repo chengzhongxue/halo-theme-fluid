@@ -21,6 +21,18 @@
     <th:block th:replace="~{'modules/variables/ground-glass'}"/>
     <script th:src="@{/assets/js/utils.js?v={version}(version=${theme.spec.version})}"></script>
     <script th:src="@{/assets/js/color-schema.js?v={version}(version=${theme.spec.version})}"></script>
+    <style th:if="${theme.config.global.hidden_scroll_bar}">
+        html::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+        }
+        html {
+          scrollbar-width: none;
+        }
+        html {
+          overflow: -moz-scrollbars-none;
+        }
+    </style>
 
     <style type="text/css"
         th:if="${not #strings.isEmpty(theme.config.custom.code_css)}"
