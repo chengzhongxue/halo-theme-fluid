@@ -1,5 +1,8 @@
-<div id="banner" class="banner" th:if="${theme.config.global.banner.parallax}" th:attr="parallax = ${theme.config.global.banner.parallax}"
-    th:style="|background: url(${banner_img}) no-repeat center center; background-size: cover;|">
+<div id="banner" class="banner" th:if="${theme.config.global.banner.parallax}"
+    th:attr="parallax = ${theme.config.global.banner.parallax}"
+    th:style="${#strings.endsWith(banner_img, '.mp4')} ? '' : |background: url(${banner_img}) no-repeat center center; background-size: cover;|">
+    <video th:if="${#strings.endsWith(banner_img, '.mp4')}" autoplay loop muted th:attr="src=${banner_img}"
+        style="position: absolute; width: 100%; height: 100%; object-fit: cover;"></video>
     <div class="full-bg-img">
         <div class="mask flex-center" th:style="|background-color: rgba(0, 0, 0, ${banner_mask_alpha})|">
             <div class="banner-text text-center fade-in-up">
@@ -9,9 +12,7 @@
                     <span th:unless="${theme.config.fun_features.typing.enable}" id="subtitle"
                         th:text="${_title}"></span>
                 </div>
-
             </div>
-
             <div class="scroll-down-bar"
                 th:if="${theme.config.global.scroll_down_arrow.enable && #conversions.convert(theme.config.global.scroll_down_arrow.banner_height_limit, 'java.lang.Integer') <= banner_img_height}">
                 <i class="iconfont icon-arrowdown"></i>

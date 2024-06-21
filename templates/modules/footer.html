@@ -4,22 +4,21 @@
             th:utext="${theme.config.footer.content}"></div>
         <div class="beian" th:if="${theme.config.footer.beian.enable}">
             <span>
-                <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener"
-                    th:text="${theme.config.footer.beian.icp_text}"></a>
+                <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener" th:text="${theme.config.footer.beian.icp_text}"></a>
             </span>
-            <span>
-                <a th:if="${not #strings.isEmpty(theme.config.footer.beian.police_code)}" 
-                th:href="|http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=${theme.config.footer.beian.police_code}|"
+            <span th:if="${not #strings.isEmpty(theme.config.footer.beian.police_code)} or ${not #strings.isEmpty(theme.config.footer.beian.police_text)}">
+                <a
+                    th:if="${not #strings.isEmpty(theme.config.footer.beian.police_code)}"
+                    th:href="|http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=${theme.config.footer.beian.police_code}|"
                     rel="nofollow noopener" class="beian-police" target="_blank">
-
-                    <th:block th:if="${not #strings.isEmpty(theme.config.footer.beian.police_icon)}" >
+                    <th:block th:if="${not #strings.isEmpty(theme.config.footer.beian.police_icon)}">
                         <span style="visibility: hidden; width: 0">|</span>
                         <img th:src="@{${theme.config.footer.beian.police_icon}}" alt="police-icon" />
                     </th:block>
                     <span th:text="${theme.config.footer.beian.police_text}"></span>
                 </a>
                 <span class="beian-police" th:unless="${not #strings.isEmpty(theme.config.footer.beian.police_code)}">
-                    <th:block th:if="${not #strings.isEmpty(theme.config.footer.beian.police_icon)}" >
+                    <th:block th:if="${not #strings.isEmpty(theme.config.footer.beian.police_icon)}">
                         <span style="visibility: hidden; width: 0">|</span>
                         <img th:src="@{${theme.config.footer.beian.police_icon}}" alt="police-icon" />
                     </th:block>
