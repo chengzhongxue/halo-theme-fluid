@@ -18,7 +18,7 @@
               <div class="list-group">
                 <p class="h4" th:text="|共计 ${siteStatsFinder.getStats().post} 篇文章|"></p>
                 <hr>
-                <th:block th:each="archive : ${archives.items}">
+                <th:block th:each="archive : ${postFinder.archives(1, 0).items}">
                   <p class="h5" th:text="${archive.year}"></p>
                   <th:block th:each="month : ${archive.months}">
                     <th:block th:each="post : ${month.posts}">

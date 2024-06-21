@@ -43,6 +43,7 @@
                             <div class="custom mx-auto" th:if="${not #strings.isEmpty(theme.config.links.custom.content) && theme.config.links.custom.enable}">
                                 <th:block th:utext="${theme.config.links.custom.content}"></th:block>
                             </div>
+                            <th:block th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${pluginName},kind='Plugin',group='plugin.halo.run')}"></th:block>
                         </div>
                     </div>
                 </div>
