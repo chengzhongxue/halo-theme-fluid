@@ -1,7 +1,8 @@
 <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            <strong th:text="${not #strings.isEmpty(theme.config.navbar.blog_title) ? theme.config.navbar.blog_title : site.title}"></strong>
+        <a class="navbar-brand" href="/" style="font-size: 1rem;">
+            <img th:if="${theme.config.navbar.brand.type == 'image'}" th:attr="src=${theme.config.navbar.brand.image}" onerror="this.style.display='none'; document.querySelector('.navbar-brand-text').style.display='inline-block';" style="width: auto; height: 40px; margin: -5px 0px;">
+            <strong class="navbar-brand-text" th:style="${theme.config.navbar.brand.type == 'text' ? 'font-size: 1.25rem;' : 'display: none;font-size: 1.25rem;'}" th:text="${not #strings.isEmpty(theme.config.navbar.brand.text) ? theme.config.navbar.brand.text : site.title}"></strong>
         </a>
 
         <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"

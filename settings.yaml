@@ -101,15 +101,37 @@ spec:
         - $formkit: checkbox
           name: scroll_top_arrow
           label: 向顶部滚动的箭头
+        - $formkit: checkbox
+          name: hidden_scroll_bar
+          label: 隐藏页面滚动条
 
     - group: navbar
       label: 导航栏
       formSchema:
-        - $formkit: text
-          name: blog_title 
-          label: 导航栏左侧的标题
-          value: "Fluid"
-          help: 为空则按 标题 显示
+        - $formkit: group
+          name: brand
+          label: 导航栏左侧Logo
+          value: 
+            type: "text"
+            text: "Fluid"
+            image: "/themes/theme-fluid/assets/img/logo.png"
+          children:
+            - $formkit: radio
+              name: type
+              label: 类型
+              options:
+                - label: 文字
+                  value: "text"
+                - label: 图片
+                  value: "image"
+            - $formkit: text
+              name: text
+              label: Logo文字内容
+              help: 如果Logo文字内容为空，则默认显示博客系统的网站名称。
+            - $formkit: text
+              name: image
+              label: Logo图片路径
+              help: 选择图片类型时，图片路径不能为空。如果图片加载出错，则默认显示Logo文字内容。
         - $formkit: group
           name: ground_glass
           label: 导航栏毛玻璃特效
@@ -730,26 +752,31 @@ spec:
           help: 0 - 1.0  1 是完全不透明
           value: 0.3
     
-    - group: page404
-      label: 404页
+    - group: page_error
+      label: 错误页
       formSchema:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
-          value: "/themes/theme-fluid/assets/img/default.png"
+          value: "/themes/theme-fluid/assets/img/error.jpg"
         - $formkit: number
           name: banner_img_height
           label: 头图高度
-          help: 屏幕百分比 0 - 85
-          value: 85
+          help: 屏幕百分比 0 - 100
+          value: 100
         - $formkit: number
           name: banner_mask_alpha
           label: 头图黑色蒙版的不透明度
           help: 0 - 1.0  1 是完全不透明
           value: 0.3
+        - $formkit: text
+          name: redirect_page
+          label: 重定向到指定页面
+          value: /
+          help: 默认为首页，即“/”。可自行指定页面，如“/about”。
         - $formkit: number
           name: redirect_delay
-          label: 重定向到首页的延迟(毫秒)
+          label: 重定向到指定页面的延迟(毫秒)
           value: 5000
           
 
