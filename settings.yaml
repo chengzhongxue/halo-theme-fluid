@@ -114,7 +114,7 @@ spec:
           value: 
             type: "text"
             text: "Fluid"
-            image: "/themes/theme-fluid/assets/img/logo.png"
+            image: "/themes/theme-fluid/assets/img/fluid.png"
           children:
             - $formkit: radio
               name: type
