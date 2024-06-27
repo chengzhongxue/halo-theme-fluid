@@ -31,6 +31,18 @@ spec:
               name: code_font_size
               label: code字体大小
               validation: required
+        - $formkit: select
+          name: language
+          label: 主题默认语言
+          value: "auto"
+          options:
+            - label: 自动
+              value: "auto"
+            - label: 中文
+              value: "zh-CN"
+            - label: 英语
+              value: "en"
+          help: 用于修改主题的HTML语言属性，避免某些浏览器或插件弹出翻译提醒。
         - $formkit: attachment
           name: favicon 
           label: 用于浏览器标签的图标
