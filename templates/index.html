@@ -15,7 +15,7 @@ isLazyload = ${theme.config.global.lazyload.enable},loadingImg = ${theme.config.
             <div class="col-12 col-md-10 m-auto">
               <th:block th:each="post,iStat : ${posts.items}">
                 <div class="row mx-auto index-card" th:with="default_index_img= ${#strings.contains(theme.config.post.default_index_img,'?') ? theme.config.post.default_index_img+'&' : theme.config.post.default_index_img+'?'},
-                index_img = ${not #strings.isEmpty(post.spec.cover) ? post.spec.cover : #strings.isEmpty(theme.config.post.default_index_img) ? theme.config.post.default_index_img : default_index_img+post.spec.title}">
+                index_img = ${not #strings.isEmpty(post.spec.cover) ? thumbnail.gen(post.spec.cover, 's') : #strings.isEmpty(theme.config.post.default_index_img) ? theme.config.post.default_index_img : default_index_img+post.spec.title}">
                   <th:block >
                     <div class="col-12 col-md-4 m-auto index-img" th:if="${not #strings.isEmpty(index_img)}">
                       <a th:href="${post.status.permalink}" target="_self">
