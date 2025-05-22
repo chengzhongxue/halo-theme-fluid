@@ -35,6 +35,16 @@ fluid 主题支持以下 Halo 插件：
 - [ ] 瞬间（/moments）：https://halo.run/store/apps/app-SnwWD  
 - [ ] 图库（/photos）：https://halo.run/store/apps/app-BmQJW
 
+### 💬 讨论
+
+如果你对主题有什么建议或者意见，欢迎提 PR & issue。
+
+* 添加企业微信 （备注进群）
+<img width="360" src="https://api.minio.yyds.pink/kunkunyu/files/2025/02/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250212142105-pbceif.jpg" />
+
+* QQ群
+<img width="360" src="https://api.minio.yyds.pink/kunkunyu/files/2025/05/qq-708998089-iqowsh.webp" />
+
 ### 🏭 贡献
 
 > 如果你想帮助完善 `stack` 主题，请：
@@ -43,16 +53,6 @@ fluid 主题支持以下 Halo 插件：
 - 提 `issue`
 - 修 `bugs`
 - 推 `pr`
-
-<br>
-
-### 💬 讨论
-
-如果你对主题有什么建议或者意见，欢迎提 PR & issue。
-
-添加企业微信 （备注什么主题）
-<img width="360" src="https://api.minio.yyds.pink/kunkunyu/files/2025/02/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250212142105-pbceif.jpg" />
-
 
 ### 赞助
 如果 fluid 对你有帮助，欢迎[赞助我](https://afdian.net/a/moony_la)，感谢以下赞助者对 material 项目的支持：
