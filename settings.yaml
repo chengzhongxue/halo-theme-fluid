@@ -780,6 +780,52 @@ spec:
           label: 头图黑色蒙版的不透明度
           help: 0 - 1.0  1 是完全不透明
           value: 0.3
+
+    - group: plugin
+      label: 插件页
+      formSchema:
+        - $formkit: group
+          name: equipments
+          label: 装备插件
+          value:
+            banner_img: "/themes/theme-fluid/assets/img/default.png"
+            banner_img_height: 60
+            banner_mask_alpha: 0.3
+          children:
+            - $formkit: attachment
+              name: banner_img
+              label: Banner 头图
+              width: "15rem"
+              aspectRatio: "16/9"
+            - $formkit: number
+              name: banner_img_height
+              label: 头图高度
+              help: 屏幕百分比 0 - 60
+            - $formkit: number
+              name: banner_mask_alpha
+              label: 头图黑色蒙版的不透明度
+              help: 0 - 1.0  1 是完全不透明
+        - $formkit: group
+          name: douban
+          label: 豆瓣插件
+          value:
+            banner_img: "/themes/theme-fluid/assets/img/default.png"
+            banner_img_height: 60
+            banner_mask_alpha: 0.3
+          children:
+            - $formkit: attachment
+              name: banner_img
+              label: Banner 头图
+              width: "15rem"
+              aspectRatio: "16/9"
+            - $formkit: number
+              name: banner_img_height
+              label: 头图高度
+              help: 屏幕百分比 0 - 60
+            - $formkit: number
+              name: banner_mask_alpha
+              label: 头图黑色蒙版的不透明度
+              help: 0 - 1.0  1 是完全不透明
     
     - group: page_error
       label: 错误页

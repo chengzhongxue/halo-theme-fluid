@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(_head = null,_content = ~{::content},_title = ${title},page_js = null)}">
+<th:block th:fragment="content"
+          th:with="banner_img_height = ${#conversions.convert(theme.config.plugin.douban.banner_img_height, 'java.lang.Integer')}">
+    <header th:with="banner_img= ${theme.config.plugin.douban.banner_img},
+  banner_mask_alpha=${theme.config.plugin.douban.banner_mask_alpha},
+  _title=${title}">
+        <th:block th:replace="~{'modules/header'}" />
+    </header>
+    <main>
+        <th:block th:replace="~{plugin:plugin-douban:modules/style}"></th:block>
+        <div class="container nopadding-x-md">
+            <div id="board" th:style="${banner_img_height >= 100 && theme.config.global.banner.parallax ? 'margin-top: 0' : ''}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-10 m-auto">
+                            <th:block th:replace="~{plugin:plugin-douban:modules/douban}"></th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="scroll-top-button" aria-label="TOP" href="#" role="button"
+           th:if="${theme.config.global.scroll_top_arrow}">
+            <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+        </a>
+    </main>
+    <th:block th:replace="~{plugin:plugin-douban:modules/script}"></th:block>
+</th:block>
+
+</html>
