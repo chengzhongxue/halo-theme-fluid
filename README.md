@@ -28,6 +28,8 @@ fluid 主题支持以下 Halo 插件：
 - [x] [文章搜索](https://github.com/halo-sigs/plugin-search-widget)（插件）
 - [X] [评论系统](https://github.com/halo-sigs/plugin-comment-widget)（插件）
 - [x] [友情链接](https://github.com/halo-sigs/plugin-links)
+- [x] [豆瓣](https://github.com/chengzhongxue/plugin-douban)
+- [x] [装备管理](https://github.com/chengzhongxue/plugin-equipment)
 - [x] 其他功能
 
 ### TODO
