@@ -39,7 +39,7 @@ spec:
           name: apple_touch_icon 
           label: 用于苹果设备的图标
           value: "/themes/theme-fluid/assets/img/fluid.png"
-        - $formkit: checkbox
+        - $formkit: switch
           name: force_https
           label: 强制所有链接升级为 HTTPS
           value: false
@@ -51,7 +51,7 @@ spec:
             parallax: true
             width_height_ratio: 1.0
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: parallax
               id: parallax
               label: 开启
@@ -69,7 +69,7 @@ spec:
             banner_height_limit: 80
             scroll_after_turning_page: true
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: scroll_down_arrow_enable
               label: 开启
@@ -79,7 +79,7 @@ spec:
               name: banner_height_limit
               label: 头图高度不小于指定比例，才显示箭头
               help: 0 - 100
-            - $formkit: checkbox
+            - $formkit: switch
               if: $get(scroll_down_arrow_enable).value
               name: scroll_after_turning_page
               label: 翻页后自动滚动
@@ -90,7 +90,7 @@ spec:
             enable: true
             loading_img: "/themes/theme-fluid/assets/img/loading.gif"
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: lazyload_enable
               label: 开启
@@ -98,10 +98,12 @@ spec:
               if: $get(lazyload_enable).value
               name: loading_img
               label: 加载时的占位图片
-        - $formkit: checkbox
+              width: "15rem"
+              aspectRatio: "16/9"
+        - $formkit: switch
           name: scroll_top_arrow
           label: 向顶部滚动的箭头
-        - $formkit: checkbox
+        - $formkit: switch
           name: hidden_scroll_bar
           label: 隐藏页面滚动条
 
@@ -131,12 +133,12 @@ spec:
               key: brand_text
               label: Logo文字内容
               help: 如果Logo文字内容为空，则默认显示博客系统的网站名称。
-            - $formkit: text
+            - $formkit: attachment
               if: $get(brand_type).value == 'image'
               name: image
               key: brand_image
-              label: Logo图片路径
-              help: 选择图片类型时，图片路径不能为空。如果图片加载出错，则默认显示Logo文字内容。
+              label: Logo图片
+              help: 选择图片类型时，图片不能为空。如果图片加载出错，则默认显示Logo文字内容。
         - $formkit: group
           name: ground_glass
           label: 导航栏毛玻璃特效
@@ -145,7 +147,7 @@ spec:
             px: 3
             alpha: 0.7
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: ground_glass_enable
               label: 开启
@@ -166,11 +168,11 @@ spec:
           name: menu
           label: 菜单
           value: ""
-        - $formkit: checkbox
+        - $formkit: switch
           name: search
           label: 搜索功能
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: login
           label: 导航栏添加登录按钮
           value: true
@@ -181,7 +183,7 @@ spec:
             enable: true
             default: auto
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: dark_mode_enable
               label: 开启
@@ -368,6 +370,8 @@ spec:
           name: banner_img 
           label: 首页 Banner 头图
           value: "/themes/theme-fluid/assets/img/default.png"
+          width: "15rem"
+          aspectRatio: "16/9"
           help: 可设置视频背景，视频仅支持.mp4格式
         - $formkit: number
           name: banner_img_height
@@ -391,7 +395,7 @@ spec:
               url: "https://v1.hitokoto.cn/"
               keys: "'hitokoto'"
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: slogan_enable
               label: 显示
@@ -404,7 +408,7 @@ spec:
               label: 通过 API 接口作为首页副标题的内容
               help: 必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能
               children:
-                - $formkit: checkbox
+                - $formkit: switch
                   name: enable
                   id: api_enable
                   label: 显示
@@ -436,7 +440,7 @@ spec:
             enable: true
             icon: iconfont icon-top
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: post_sticky_enable
               id: post_sticky_enable
               label: 显示
@@ -467,6 +471,8 @@ spec:
           name: default_index_img 
           label: 文章在首页的默认封面图
           value: ""
+          width: "15rem"
+          aspectRatio: "16/9"
         - $formkit: group
           name: meta
           label: 文章标题下方的元信息
@@ -477,19 +483,19 @@ spec:
             min2read_enable: true
             views_enable: false
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: author_enable
               label: 作者
-            - $formkit: checkbox
+            - $formkit: switch
               name: date_enable
               label: 文章日期
-            - $formkit: checkbox
+            - $formkit: switch
               name: wordcount_enable
               label: 字数统计
-            - $formkit: checkbox
+            - $formkit: switch
               name: min2read_enable
               label: 估计阅读全文需要的时长
-            - $formkit: checkbox
+            - $formkit: switch
               name: views_enable
               label: 浏览量计数
         - $formkit: group
@@ -502,7 +508,7 @@ spec:
             post_date_enable: true
             update_date_enable: false
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               label: 显示
             - $formkit: select
@@ -521,24 +527,24 @@ spec:
                   value: BY-NC-SA
                 - label: BY-NC-ND
                   value: BY-NC-ND
-            - $formkit: checkbox
+            - $formkit: switch
               name: author_enable
               label: 显示作者
-            - $formkit: checkbox
+            - $formkit: switch
               name: post_date_enable
               label: 显示发布日期
-            - $formkit: checkbox
+            - $formkit: switch
               name: update_date_enable
               label: 显示更新日期
-        - $formkit: checkbox
+        - $formkit: switch
           name: prev_next_enable
           label: 文章底部上一篇下一篇功能
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: image_caption
           label: 文章图片标题
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: image_zoom
           label: 文章图片可点击放大
           value: true
@@ -551,7 +557,7 @@ spec:
             headingSelector: "h1,h2,h3,h4,h5,h6"
             collapseDepth: 0
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: toc_enable
               label: 显示
@@ -580,6 +586,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -626,6 +634,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -644,6 +654,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -672,6 +684,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -695,9 +709,16 @@ spec:
           name: intro 
           label: 简介
           value: "An elegant theme for Halo"
-        - $formkit: repeater
+        - $formkit: array
           name: icons
           label: 社交媒体
+          itemLabels:
+            - type: text
+              label: $value.icon_type
+            - type: text
+              label: $value.tip
+            - type: text
+              label: $value.link
           value:
             - class: "iconfont icon-github-fill"
               icon_type: link
@@ -735,7 +756,8 @@ spec:
               label: 链接
             - $formkit: attachment
               if: $value.icon_type == 'qrcode'
-              name: qrcode 
+              name: qrcode
+              width: "15rem"
               label: 二维码
             
 
@@ -745,6 +767,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -763,6 +787,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/error.jpg"
         - $formkit: number
           name: banner_img_height
@@ -791,6 +817,8 @@ spec:
         - $formkit: attachment
           name: banner_img 
           label: Banner 头图
+          width: "15rem"
+          aspectRatio: "16/9"
           value: "/themes/theme-fluid/assets/img/default.png"
         - $formkit: number
           name: banner_img_height
@@ -809,7 +837,7 @@ spec:
             enable: true
             content: "<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>"
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               label: 开启
             - $formkit: code
@@ -831,7 +859,7 @@ spec:
             cursorChar: "_"
             loop: false
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: typing_enable
               label: 开启
@@ -846,7 +874,7 @@ spec:
               name: cursorChar
               label: 游标字符
               validation: required
-            - $formkit: checkbox
+            - $formkit: switch
               if: $get(typing_enable).value
               name: loop
               label: 是否循环播放效果
@@ -860,7 +888,7 @@ spec:
             visible: "hover"
             icon: ""
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: anchorjs_enable
               label: 显示
@@ -903,7 +931,7 @@ spec:
             showSpinner: false
             trickleSpeed: 100
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: progressbar_enable
               label: 开启
@@ -915,7 +943,7 @@ spec:
               name: color
               if: $get(progressbar_enable).value
               label: 颜色
-            - $formkit: checkbox
+            - $formkit: switch
               name: showSpinner
               if: $get(progressbar_enable).value
               label: showSpinner
@@ -947,7 +975,7 @@ spec:
             police_code: 123456
             police_icon: /themes/theme-fluid/assets/img/police_beian.png
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: enable
               id: beian_enable
               label: 显示

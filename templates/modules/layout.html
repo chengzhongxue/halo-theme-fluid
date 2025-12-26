@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (_head,_content,_title,page_js)"
+<html th:lang="${#locale.toLanguageTag}" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (_head,_content,_title,page_js)"
   th:with="site_title = ${not #strings.isEmpty(_title) ?  _title+' - '+site.title  :  #strings.isEmpty(site.subtitle) ? site.title :  site.title +' - ' +site.subtitle }">
 
 <head th:replace="~{modules/head :: head}"></head>

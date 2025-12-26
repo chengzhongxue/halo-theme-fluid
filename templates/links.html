@@ -24,7 +24,7 @@
                                                 target="_blank" rel="noopener">
                                                 <div class="card-content">
                                                     <div class="link-avatar my-auto">
-                                                        <img th:src="${isLazyload ? loadingImg : link.spec.logo}"
+                                                        <img th:src="${isLazyload ? '' : link.spec.logo}"
                                                              th:data-original="${ isLazyload ? link.spec.logo : ''}"
                                                             th:alt="${link.spec.displayName}" />
                                                     </div>

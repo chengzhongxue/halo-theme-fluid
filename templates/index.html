@@ -19,7 +19,7 @@ isLazyload = ${theme.config.global.lazyload.enable},loadingImg = ${theme.config.
                   <th:block >
                     <div class="col-12 col-md-4 m-auto index-img" th:if="${not #strings.isEmpty(index_img)}">
                       <a th:href="${post.status.permalink}" target="_self">
-                        <img th:src="${isLazyload ? loadingImg : index_img}"
+                        <img th:src="${isLazyload ? '' : index_img}"
                              th:data-original="${ isLazyload ? index_img : ''}"
                               th:alt="${post.spec.title}">
                       </a>
