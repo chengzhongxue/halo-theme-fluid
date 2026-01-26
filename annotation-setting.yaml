@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: AnnotationSetting
 metadata:
-  generateName: annotation-setting-
+  name: annotation-setting-fluid-menu
 spec:
   targetRef:
     group: ""
