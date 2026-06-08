@@ -18,6 +18,10 @@
     <th:block th:replace="${page_js}" />
   </th:block>
   <script th:src="@{/assets/js/boot.js?v={version}(version=${theme.spec.version})}"></script>
+
+  <script th:if="${theme.config.custom.callout_enable}"
+    th:src="@{/assets/js/callout.js?v={version}(version=${theme.spec.version})}"></script>
+
   <script type="text/javascript" th:if="${not #strings.isEmpty(theme.config.custom.code_js)}"
     th:utext="${theme.config.custom.code_js}">
     </script>

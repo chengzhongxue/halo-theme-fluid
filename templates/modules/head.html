@@ -37,4 +37,7 @@
     <style type="text/css"
         th:if="${not #strings.isEmpty(theme.config.custom.code_css)}"
         th:utext="${theme.config.custom.code_css}" ></style>
+
+    <link rel="stylesheet" th:if="${theme.config.custom.callout_enable}"
+        th:href="@{/assets/css/callout.css?v={version}(version=${theme.spec.version})}">
 </head>
