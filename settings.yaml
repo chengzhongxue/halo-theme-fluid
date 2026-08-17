@@ -1047,6 +1047,11 @@ spec:
     - group: custom
       label: 扩展设置
       formSchema:
+        - $formkit: switch
+          name: callout_enable
+          label: 启用 Obsidian Callout 支持
+          value: false
+          help: 将 blockquote 中的 [!type] 语法渲染为彩色提示块（quote, abstract, info, tip, warning, danger 等）
         - $formkit: code
           name: head_html
           label: 头部HTML代码
