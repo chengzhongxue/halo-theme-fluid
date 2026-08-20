@@ -34,8 +34,8 @@ isLazyload = ${theme.config.global.lazyload.enable},loadingImg = ${theme.config.
                     </h2>
                     <a class="index-excerpt ${not #strings.isEmpty(index_img) ? '' : 'index-excerpt__noimg' }"
                       th:href="${post.status.permalink}" target="_self">
-                      <th:block th:with="excerpt = ${#strings.length(post.status.excerpt) > 200 ? 200 : #strings.length(post.status.excerpt)}">
-                        <div th:text="${#strings.substring(post.status.excerpt,0,excerpt)}">
+                      <th:block th:with="excerpt = ${#strings.isEmpty(post.status.excerpt) ? '' : post.status.excerpt}">
+                        <div th:text="${#strings.abbreviate(excerpt, 200)}">
                         </div>
                       </th:block>
                     </a>

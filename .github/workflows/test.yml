@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - fix-null-excerpt-index
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Check nullable excerpt handling
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('templates/index.html').read_text()
+          unsafe = '#strings.length(post.status.excerpt)' in text or '#strings.substring(post.status.excerpt' in text
+          if unsafe:
+              raise SystemExit('FAIL: index template calls #strings length/substring directly on nullable post.status.excerpt')
+          print('PASS: index template guards nullable post.status.excerpt')
+          PY
+
+      - name: Build
+        run: ./gradlew build
